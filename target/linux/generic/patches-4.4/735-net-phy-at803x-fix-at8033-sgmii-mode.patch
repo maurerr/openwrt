@@ -1,5 +1,7 @@
---- a/drivers/net/phy/at803x.c
-+++ b/drivers/net/phy/at803x.c
+Index: linux-4.4.232/drivers/net/phy/at803x.c
+===================================================================
+--- linux-4.4.232.orig/drivers/net/phy/at803x.c
++++ linux-4.4.232/drivers/net/phy/at803x.c
 @@ -36,6 +36,9 @@
  #define AT803X_INER				0x0012
  #define AT803X_INER_INIT			0xec00

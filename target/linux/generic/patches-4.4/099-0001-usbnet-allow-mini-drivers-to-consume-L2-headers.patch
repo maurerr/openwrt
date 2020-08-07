@@ -20,7 +20,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/net/usb/usbnet.c
 +++ b/drivers/net/usb/usbnet.c
-@@ -324,7 +324,10 @@ void usbnet_skb_return (struct usbnet *d
+@@ -329,7 +329,10 @@ void usbnet_skb_return (struct usbnet *d
  		return;
  	}
  

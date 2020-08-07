@@ -1,5 +1,7 @@
---- a/drivers/leds/trigger/Kconfig
-+++ b/drivers/leds/trigger/Kconfig
+Index: linux-4.4.232/drivers/leds/trigger/Kconfig
+===================================================================
+--- linux-4.4.232.orig/drivers/leds/trigger/Kconfig
++++ linux-4.4.232/drivers/leds/trigger/Kconfig
 @@ -108,4 +108,11 @@ config LEDS_TRIGGER_CAMERA
  	  This enables direct flash/torch on/off by the driver, kernel space.
  	  If unsure, say Y.
@@ -12,8 +14,10 @@
 +	  If unsure, say Y.
 +
  endif # LEDS_TRIGGERS
---- a/drivers/leds/Makefile
-+++ b/drivers/leds/Makefile
+Index: linux-4.4.232/drivers/leds/Makefile
+===================================================================
+--- linux-4.4.232.orig/drivers/leds/Makefile
++++ linux-4.4.232/drivers/leds/Makefile
 @@ -72,3 +72,4 @@ obj-$(CONFIG_LEDS_DAC124S085)		+= leds-d
  
  # LED Triggers
