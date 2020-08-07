@@ -49,7 +49,15 @@
  /*
   * Given a pointer to the MTD object in the mtd_part structure, we can retrieve
   * the pointer to that structure with this macro.
-@@ -655,6 +659,35 @@ int mtd_del_partition(struct mtd_info *m
+@@ -612,6 +616,7 @@ int mtd_add_partition(struct mtd_info *m
+ 	mutex_unlock(&mtd_partitions_mutex);
+ 
+ 	add_mtd_device(&new->mtd);
++	mtd_partition_split(master, new);
+ 
+ 	mtd_add_partition_attrs(new);
+ 
+@@ -644,6 +649,35 @@ int mtd_del_partition(struct mtd_info *m
  }
  EXPORT_SYMBOL_GPL(mtd_del_partition);
  
@@ -85,6 +93,14 @@
  /*
   * This function, given a master MTD object and a partition table, creates
   * and registers slave MTD objects which are bound to the master according to
+@@ -675,6 +709,7 @@ int add_mtd_partitions(struct mtd_info *
+ 		mutex_unlock(&mtd_partitions_mutex);
+ 
+ 		add_mtd_device(&slave->mtd);
++		mtd_partition_split(master, slave);
+ 		mtd_add_partition_attrs(slave);
+ 
+ 		cur_offset = slave->offset + slave->mtd.size;
 --- a/include/linux/mtd/partitions.h
 +++ b/include/linux/mtd/partitions.h
 @@ -84,5 +84,7 @@ int mtd_add_partition(struct mtd_info *m

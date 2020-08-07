@@ -1,6 +1,6 @@
 --- a/drivers/net/phy/phy_device.c
 +++ b/drivers/net/phy/phy_device.c
-@@ -742,6 +742,9 @@ void phy_detach(struct phy_device *phyde
+@@ -740,6 +740,9 @@ void phy_detach(struct phy_device *phyde
  	struct mii_bus *bus;
  	int i;
  
