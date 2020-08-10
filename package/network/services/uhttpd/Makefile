@@ -11,14 +11,15 @@ PKG_NAME:=uhttpd
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL=$(LEDE_GIT)/project/uhttpd.git
-PKG_SOURCE_DATE:=2018-11-28
-PKG_SOURCE_VERSION:=cdfc902a4cb77bc538a729f9e1c8a8578454a0e5
-PKG_MIRROR_HASH:=6b21111547a4453355bd6c941a47f0116a652a77d87c1e05a035168b8ab2aa6f
+PKG_SOURCE_URL=$(PROJECT_GIT)/project/uhttpd.git
+PKG_SOURCE_DATE:=2020-02-12
+PKG_SOURCE_VERSION:=2ee323c01079248baa9465969df9e25b5fb68cdf
+PKG_MIRROR_HASH:=ebec09286cf5f977cac893931a5a4f27ba891db88d5e44a9b0de9446ae431527
 PKG_MAINTAINER:=Felix Fietkau <nbd@nbd.name>
 PKG_LICENSE:=ISC
 
 PKG_BUILD_DEPENDS = ustream-ssl
+PKG_CONFIG_DEPENDS:= CONFIG_uhttpd_lua
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
@@ -43,11 +44,11 @@ define Package/uhttpd/description
 endef
 
 define Package/uhttpd/config
-  config PACKAGE_uhttpd_debug
-    bool "Build with debug messages"
-    default n
+  config uhttpd_lua
+    depends on PACKAGE_uhttpd-mod-lua
+    bool "Enable Integrated Lua interpreter"
+	default y
 endef
-
 
 define Package/uhttpd-mod-lua
   $(Package/uhttpd/default)
