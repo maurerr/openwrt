@@ -1,0 +1,39 @@
+From 80d161eb5b95ceb51db989196405eaa00950e03b Mon Sep 17 00:00:00 2001
+From: Rosen Penev <rosenp@gmail.com>
+Date: Fri, 29 Nov 2019 13:08:32 -0800
+Subject: [PATCH] opkg: Fix -Wformat-overflow warning
+
+A null pointer is being passed to printf. This can lead to problems.
+
+Fixes warning:
+
+error: '%s' directive argument is null [-Werror=format-overflow=]
+   41 |    opkg_message(l, "%s: "fmt, __FUNCTION__, ##args); \
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+note: in expansion of macro 'opkg_msg'
+   45 |  opkg_msg(l, fmt": %s.\n", ##args, strerror(errno))
+      |  ^~~~~~~~
+note: in expansion of macro 'opkg_perror'
+  247 |   opkg_perror(ERROR, "Failed to create temporary directory '%s'",
+
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ libopkg/opkg_install.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/libopkg/opkg_install.c b/libopkg/opkg_install.c
+index 976f446..27c9484 100644
+--- a/libopkg/opkg_install.c
++++ b/libopkg/opkg_install.c
+@@ -244,8 +244,7 @@ static int unpack_pkg_control_files(pkg_t * pkg)
+ 
+ 	tmp_unpack_dir = mkdtemp(tmp_unpack_dir);
+ 	if (tmp_unpack_dir == NULL) {
+-		opkg_perror(ERROR, "Failed to create temporary directory '%s'",
+-			    tmp_unpack_dir);
++		opkg_perror(ERROR, "Failed to create temporary directory");
+ 		return -1;
+ 	}
+ 
+-- 
+2.20.1
