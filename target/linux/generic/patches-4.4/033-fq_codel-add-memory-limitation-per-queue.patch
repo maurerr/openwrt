@@ -63,7 +63,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 --- a/net/sched/sch_fq_codel.c
 +++ b/net/sched/sch_fq_codel.c
 @@ -58,8 +58,11 @@ struct fq_codel_sched_data {
- 	u32		perturbation;	/* hash perturbation */
+ 	siphash_key_t	perturbation;	/* hash perturbation */
  	u32		quantum;	/* psched_mtu(qdisc_dev(sch)); */
  	u32		drop_batch_size;
 +	u32		memory_limit;
@@ -161,7 +161,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 +	q->memory_limit = 32 << 20; /* 32 MBytes */
  	q->drop_batch_size = 64;
  	q->quantum = psched_mtu(qdisc_dev(sch));
- 	q->perturbation = prandom_u32();
+ 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
 @@ -502,6 +519,8 @@ static int fq_codel_dump(struct Qdisc *s
  			q->quantum) ||
  	    nla_put_u32(skb, TCA_FQ_CODEL_DROP_BATCH_SIZE,

@@ -12,10 +12,8 @@ Signed-off-by: Yousong Zhou <yszhou4tech@gmail.com>
  3 files changed, 167 insertions(+), 27 deletions(-)
  create mode 100644 arch/mips/kernel/machine_kexec.h
 
-Index: linux-4.4.232/arch/mips/kernel/machine_kexec.c
-===================================================================
---- linux-4.4.232.orig/arch/mips/kernel/machine_kexec.c
-+++ linux-4.4.232/arch/mips/kernel/machine_kexec.c
+--- a/arch/mips/kernel/machine_kexec.c
++++ b/arch/mips/kernel/machine_kexec.c
 @@ -67,10 +67,12 @@ machine_kexec(struct kimage *image)
  	unsigned long *ptr;
  
@@ -72,10 +70,8 @@ Index: linux-4.4.232/arch/mips/kernel/machine_kexec.c
  	smp_wmb();
  	atomic_set(&kexec_ready_to_reboot, 1);
  #endif
-Index: linux-4.4.232/arch/mips/kernel/machine_kexec.h
-===================================================================
 --- /dev/null
-+++ linux-4.4.232/arch/mips/kernel/machine_kexec.h
++++ b/arch/mips/kernel/machine_kexec.h
 @@ -0,0 +1,20 @@
 +#ifndef _MACHINE_KEXEC_H
 +#define _MACHINE_KEXEC_H
@@ -97,10 +93,8 @@ Index: linux-4.4.232/arch/mips/kernel/machine_kexec.h
 +#define KEXEC_MAX_ARGC			(KEXEC_ARGV_SIZE / sizeof(long))
 +
 +#endif
-Index: linux-4.4.232/arch/mips/kernel/relocate_kernel.S
-===================================================================
---- linux-4.4.232.orig/arch/mips/kernel/relocate_kernel.S
-+++ linux-4.4.232/arch/mips/kernel/relocate_kernel.S
+--- a/arch/mips/kernel/relocate_kernel.S
++++ b/arch/mips/kernel/relocate_kernel.S
 @@ -12,8 +12,9 @@
  #include <asm/mipsregs.h>
  #include <asm/stackframe.h>

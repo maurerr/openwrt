@@ -27,7 +27,7 @@ Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
 --- a/arch/mips/mm/c-r4k.c
 +++ b/arch/mips/mm/c-r4k.c
-@@ -781,7 +781,7 @@ static void r4k_flush_icache_range(unsig
+@@ -786,7 +786,7 @@ static void r4k_flush_icache_range(unsig
  		 * If address-based cache ops are globalized, then we may be
  		 * able to avoid the IPI for small flushes.
  		 */

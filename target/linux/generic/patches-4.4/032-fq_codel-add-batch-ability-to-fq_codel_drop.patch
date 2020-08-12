@@ -43,7 +43,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 +++ b/net/sched/sch_fq_codel.c
 @@ -57,6 +57,7 @@ struct fq_codel_sched_data {
  	u32		flows_cnt;	/* number of flows */
- 	u32		perturbation;	/* hash perturbation */
+ 	siphash_key_t	perturbation;	/* hash perturbation */
  	u32		quantum;	/* psched_mtu(qdisc_dev(sch)); */
 +	u32		drop_batch_size;
  	struct codel_params cparams;
@@ -176,7 +176,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  	q->flows_cnt = 1024;
 +	q->drop_batch_size = 64;
  	q->quantum = psched_mtu(qdisc_dev(sch));
- 	q->perturbation = prandom_u32();
+ 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
  	INIT_LIST_HEAD(&q->new_flows);
 @@ -476,6 +500,8 @@ static int fq_codel_dump(struct Qdisc *s
  			q->cparams.ecn) ||
