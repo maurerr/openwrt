@@ -1,6 +1,8 @@
 
---- a/drivers/usb/host/pci-quirks.c
-+++ b/drivers/usb/host/pci-quirks.c
+Index: linux-4.4.232/drivers/usb/host/pci-quirks.c
+===================================================================
+--- linux-4.4.232.orig/drivers/usb/host/pci-quirks.c
++++ linux-4.4.232/drivers/usb/host/pci-quirks.c
 @@ -98,6 +98,8 @@ struct amd_chipset_type {
  	u8 rev;
  };
@@ -44,8 +46,10 @@
  DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_ANY_ID, PCI_ANY_ID,
  			PCI_CLASS_SERIAL_USB, 8, quirk_usb_early_handoff);
 +#endif
---- a/drivers/usb/host/pci-quirks.h
-+++ b/drivers/usb/host/pci-quirks.h
+Index: linux-4.4.232/drivers/usb/host/pci-quirks.h
+===================================================================
+--- linux-4.4.232.orig/drivers/usb/host/pci-quirks.h
++++ linux-4.4.232/drivers/usb/host/pci-quirks.h
 @@ -4,6 +4,9 @@
  #ifdef CONFIG_PCI
  void uhci_reset_hc(struct pci_dev *pdev, unsigned long base);
@@ -82,8 +86,10 @@
 +#endif
  
  #endif  /*  __LINUX_USB_PCI_QUIRKS_H  */
---- a/include/linux/usb/hcd.h
-+++ b/include/linux/usb/hcd.h
+Index: linux-4.4.232/include/linux/usb/hcd.h
+===================================================================
+--- linux-4.4.232.orig/include/linux/usb/hcd.h
++++ linux-4.4.232/include/linux/usb/hcd.h
 @@ -460,7 +460,14 @@ extern int usb_hcd_pci_probe(struct pci_
  extern void usb_hcd_pci_remove(struct pci_dev *dev);
  extern void usb_hcd_pci_shutdown(struct pci_dev *dev);

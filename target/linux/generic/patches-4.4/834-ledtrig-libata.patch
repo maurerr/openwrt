@@ -22,8 +22,10 @@ Signed-off-by: Daniel Golle <daniel@makrotopia.org>
  include/linux/libata.h    |  9 +++++++++
  3 files changed, 66 insertions(+)
 
---- a/drivers/ata/Kconfig
-+++ b/drivers/ata/Kconfig
+Index: linux-4.4.232/drivers/ata/Kconfig
+===================================================================
+--- linux-4.4.232.orig/drivers/ata/Kconfig
++++ linux-4.4.232/drivers/ata/Kconfig
 @@ -46,6 +46,22 @@ config ATA_VERBOSE_ERROR
  
  	  If unsure, say Y.
@@ -47,8 +49,10 @@ Signed-off-by: Daniel Golle <daniel@makrotopia.org>
  config ATA_ACPI
  	bool "ATA ACPI Support"
  	depends on ACPI
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
+Index: linux-4.4.232/drivers/ata/libata-core.c
+===================================================================
+--- linux-4.4.232.orig/drivers/ata/libata-core.c
++++ linux-4.4.232/drivers/ata/libata-core.c
 @@ -727,6 +727,19 @@ u64 ata_tf_read_block(struct ata_taskfil
  	return block;
  }
@@ -126,8 +130,10 @@ Signed-off-by: Daniel Golle <daniel@makrotopia.org>
  	/* Create associated sysfs transport objects  */
  	for (i = 0; i < host->n_ports; i++) {
  		rc = ata_tport_add(host->dev,host->ports[i]);
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
+Index: linux-4.4.232/include/linux/libata.h
+===================================================================
+--- linux-4.4.232.orig/include/linux/libata.h
++++ linux-4.4.232/include/linux/libata.h
 @@ -881,6 +881,12 @@ struct ata_port {
  #ifdef CONFIG_ATA_ACPI
  	struct ata_acpi_gtm	__acpi_init_gtm; /* use ata_acpi_init_gtm() */

@@ -1,5 +1,7 @@
---- a/drivers/mtd/Kconfig
-+++ b/drivers/mtd/Kconfig
+Index: linux-4.4.232/drivers/mtd/Kconfig
+===================================================================
+--- linux-4.4.232.orig/drivers/mtd/Kconfig
++++ linux-4.4.232/drivers/mtd/Kconfig
 @@ -12,6 +12,23 @@ menuconfig MTD
  
  if MTD
@@ -24,8 +26,10 @@
  config MTD_TESTS
  	tristate "MTD tests support (DANGEROUS)"
  	depends on m
---- a/drivers/mtd/mtdpart.c
-+++ b/drivers/mtd/mtdpart.c
+Index: linux-4.4.232/drivers/mtd/mtdpart.c
+===================================================================
+--- linux-4.4.232.orig/drivers/mtd/mtdpart.c
++++ linux-4.4.232/drivers/mtd/mtdpart.c
 @@ -29,11 +29,13 @@
  #include <linux/kmod.h>
  #include <linux/mtd/mtd.h>
@@ -85,8 +89,10 @@
  /*
   * This function, given a master MTD object and a partition table, creates
   * and registers slave MTD objects which are bound to the master according to
---- a/include/linux/mtd/partitions.h
-+++ b/include/linux/mtd/partitions.h
+Index: linux-4.4.232/include/linux/mtd/partitions.h
+===================================================================
+--- linux-4.4.232.orig/include/linux/mtd/partitions.h
++++ linux-4.4.232/include/linux/mtd/partitions.h
 @@ -84,5 +84,7 @@ int mtd_add_partition(struct mtd_info *m
  		      long long offset, long long length);
  int mtd_del_partition(struct mtd_info *master, int partno);

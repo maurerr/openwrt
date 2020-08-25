@@ -59,7 +59,7 @@ Signed-off-by: Mark Brown <broonie@kernel.org>
  }
  
  /**
-@@ -2336,6 +2341,46 @@ int spi_async_locked(struct spi_device *
+@@ -2337,6 +2342,46 @@ int spi_async_locked(struct spi_device *
  EXPORT_SYMBOL_GPL(spi_async_locked);
  
  

@@ -121,7 +121,7 @@ Cc: linux-mips@linux-mips.org
  		smp_call_function_many(&cpu_foreign_map, func, info, 1);
  	func(info);
  	preempt_enable();
-@@ -461,7 +497,7 @@ static inline void local_r4k___flush_cac
+@@ -456,7 +492,7 @@ static inline void local_r4k___flush_cac
  
  static void r4k___flush_cache_all(void)
  {
@@ -130,7 +130,7 @@ Cc: linux-mips@linux-mips.org
  }
  
  static inline int has_valid_asid(const struct mm_struct *mm)
-@@ -508,7 +544,7 @@ static void r4k_flush_cache_range(struct
+@@ -503,7 +539,7 @@ static void r4k_flush_cache_range(struct
  	int exec = vma->vm_flags & VM_EXEC;
  
  	if (cpu_has_dc_aliases || (exec && !cpu_has_ic_fills_f_dc))
@@ -139,7 +139,7 @@ Cc: linux-mips@linux-mips.org
  }
  
  static inline void local_r4k_flush_cache_mm(void * args)
-@@ -540,7 +576,7 @@ static void r4k_flush_cache_mm(struct mm
+@@ -535,7 +571,7 @@ static void r4k_flush_cache_mm(struct mm
  	if (!cpu_has_dc_aliases)
  		return;
  
@@ -148,7 +148,7 @@ Cc: linux-mips@linux-mips.org
  }
  
  struct flush_cache_page_args {
-@@ -634,7 +670,7 @@ static void r4k_flush_cache_page(struct
+@@ -629,7 +665,7 @@ static void r4k_flush_cache_page(struct
  	args.addr = addr;
  	args.pfn = pfn;
  
@@ -157,7 +157,7 @@ Cc: linux-mips@linux-mips.org
  }
  
  static inline void local_r4k_flush_data_cache_page(void * addr)
-@@ -647,18 +683,23 @@ static void r4k_flush_data_cache_page(un
+@@ -642,18 +678,23 @@ static void r4k_flush_data_cache_page(un
  	if (in_atomic())
  		local_r4k_flush_data_cache_page((void *)addr);
  	else
@@ -184,7 +184,7 @@ Cc: linux-mips@linux-mips.org
  			r4k_blast_dcache();
  		} else {
  			R4600_HIT_CACHEOP_WAR_IMPL;
-@@ -666,7 +707,8 @@ static inline void local_r4k_flush_icach
+@@ -661,7 +702,8 @@ static inline void local_r4k_flush_icach
  		}
  	}
  
@@ -194,7 +194,7 @@ Cc: linux-mips@linux-mips.org
  		r4k_blast_icache();
  	else {
  		switch (boot_cpu_type()) {
-@@ -692,23 +734,59 @@ static inline void local_r4k_flush_icach
+@@ -687,23 +729,59 @@ static inline void local_r4k_flush_icach
  #endif
  }
  
@@ -256,7 +256,7 @@ Cc: linux-mips@linux-mips.org
  	instruction_hazard();
  }
  
-@@ -830,7 +908,12 @@ static void local_r4k_flush_cache_sigtra
+@@ -825,7 +903,12 @@ static void local_r4k_flush_cache_sigtra
  
  static void r4k_flush_cache_sigtramp(unsigned long addr)
  {
@@ -270,7 +270,7 @@ Cc: linux-mips@linux-mips.org
  }
  
  static void r4k_flush_icache_all(void)
-@@ -844,6 +927,15 @@ struct flush_kernel_vmap_range_args {
+@@ -839,6 +922,15 @@ struct flush_kernel_vmap_range_args {
  	int		size;
  };
  
@@ -286,7 +286,7 @@ Cc: linux-mips@linux-mips.org
  static inline void local_r4k_flush_kernel_vmap_range(void *args)
  {
  	struct flush_kernel_vmap_range_args *vmra = args;
-@@ -854,12 +946,8 @@ static inline void local_r4k_flush_kerne
+@@ -849,12 +941,8 @@ static inline void local_r4k_flush_kerne
  	 * Aliases only affect the primary caches so don't bother with
  	 * S-caches or T-caches.
  	 */
@@ -301,7 +301,7 @@ Cc: linux-mips@linux-mips.org
  }
  
  static void r4k_flush_kernel_vmap_range(unsigned long vaddr, int size)
-@@ -869,7 +957,12 @@ static void r4k_flush_kernel_vmap_range(
+@@ -864,7 +952,12 @@ static void r4k_flush_kernel_vmap_range(
  	args.vaddr = (unsigned long) vaddr;
  	args.size = size;
  

@@ -1,6 +1,6 @@
 --- a/drivers/rtc/Kconfig
 +++ b/drivers/rtc/Kconfig
-@@ -1133,6 +1133,15 @@ config RTC_DRV_ZYNQMP
+@@ -1132,6 +1132,15 @@ config RTC_DRV_ZYNQMP
  	  If you say yes here you get support for the RTC controller found on
  	  Xilinx Zynq Ultrascale+ MPSoC.
  

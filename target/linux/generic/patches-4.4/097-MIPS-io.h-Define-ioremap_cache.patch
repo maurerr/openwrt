@@ -19,7 +19,7 @@ Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
 
 --- a/arch/mips/include/asm/io.h
 +++ b/arch/mips/include/asm/io.h
-@@ -265,6 +265,7 @@ static inline void __iomem * __ioremap_m
+@@ -275,6 +275,7 @@ static inline void __iomem * __ioremap_m
   */
  #define ioremap_cachable(offset, size)					\
  	__ioremap_mode((offset), (size), _page_cachable_default)

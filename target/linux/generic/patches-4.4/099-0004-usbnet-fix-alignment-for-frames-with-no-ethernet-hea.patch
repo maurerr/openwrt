@@ -40,7 +40,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  
 --- a/drivers/net/usb/usbnet.c
 +++ b/drivers/net/usb/usbnet.c
-@@ -490,7 +490,10 @@ static int rx_submit (struct usbnet *dev
+@@ -482,7 +482,10 @@ static int rx_submit (struct usbnet *dev
  		return -ENOLINK;
  	}
  
