@@ -22,10 +22,8 @@ Signed-off-by: Daniel Golle <daniel@makrotopia.org>
  include/linux/libata.h    |  9 +++++++++
  3 files changed, 66 insertions(+)
 
-Index: linux-4.4.232/drivers/ata/Kconfig
-===================================================================
---- linux-4.4.232.orig/drivers/ata/Kconfig
-+++ linux-4.4.232/drivers/ata/Kconfig
+--- a/drivers/ata/Kconfig
++++ b/drivers/ata/Kconfig
 @@ -46,6 +46,22 @@ config ATA_VERBOSE_ERROR
  
  	  If unsure, say Y.
@@ -49,11 +47,9 @@ Index: linux-4.4.232/drivers/ata/Kconfig
  config ATA_ACPI
  	bool "ATA ACPI Support"
  	depends on ACPI
-Index: linux-4.4.232/drivers/ata/libata-core.c
-===================================================================
---- linux-4.4.232.orig/drivers/ata/libata-core.c
-+++ linux-4.4.232/drivers/ata/libata-core.c
-@@ -727,6 +727,19 @@ u64 ata_tf_read_block(struct ata_taskfil
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -728,6 +728,19 @@ u64 ata_tf_read_block(struct ata_taskfil
  	return block;
  }
  
@@ -73,7 +69,7 @@ Index: linux-4.4.232/drivers/ata/libata-core.c
  /**
   *	ata_build_rw_tf - Build ATA taskfile for given read/write request
   *	@tf: Target ATA taskfile
-@@ -4814,6 +4827,9 @@ struct ata_queued_cmd *ata_qc_new_init(s
+@@ -4815,6 +4828,9 @@ struct ata_queued_cmd *ata_qc_new_init(s
  		if (tag < 0)
  			return NULL;
  	}
@@ -83,7 +79,7 @@ Index: linux-4.4.232/drivers/ata/libata-core.c
  
  	qc = __ata_qc_from_tag(ap, tag);
  	qc->tag = tag;
-@@ -5710,6 +5726,9 @@ struct ata_port *ata_port_alloc(struct a
+@@ -5711,6 +5727,9 @@ struct ata_port *ata_port_alloc(struct a
  	ap->stats.unhandled_irq = 1;
  	ap->stats.idle_irq = 1;
  #endif
@@ -93,7 +89,7 @@ Index: linux-4.4.232/drivers/ata/libata-core.c
  	ata_sff_port_init(ap);
  
  	return ap;
-@@ -5731,6 +5750,12 @@ static void ata_host_release(struct devi
+@@ -5732,6 +5751,12 @@ static void ata_host_release(struct devi
  
  		kfree(ap->pmp_link);
  		kfree(ap->slave_link);
@@ -106,7 +102,7 @@ Index: linux-4.4.232/drivers/ata/libata-core.c
  		kfree(ap);
  		host->ports[i] = NULL;
  	}
-@@ -6177,7 +6202,23 @@ int ata_host_register(struct ata_host *h
+@@ -6178,7 +6203,23 @@ int ata_host_register(struct ata_host *h
  		host->ports[i]->print_id = atomic_inc_return(&ata_print_id);
  		host->ports[i]->local_port_no = i + 1;
  	}
@@ -130,11 +126,19 @@ Index: linux-4.4.232/drivers/ata/libata-core.c
  	/* Create associated sysfs transport objects  */
  	for (i = 0; i < host->n_ports; i++) {
  		rc = ata_tport_add(host->dev,host->ports[i]);
-Index: linux-4.4.232/include/linux/libata.h
-===================================================================
---- linux-4.4.232.orig/include/linux/libata.h
-+++ linux-4.4.232/include/linux/libata.h
-@@ -881,6 +881,12 @@ struct ata_port {
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -38,6 +38,9 @@
+ #include <linux/acpi.h>
+ #include <linux/cdrom.h>
+ #include <linux/sched.h>
++#ifdef CONFIG_ATA_LEDS
++#include <linux/leds.h>
++#endif
+ 
+ /*
+  * Define if arch has non-standard setup.  This is a _PCI_ standard
+@@ -878,6 +881,12 @@ struct ata_port {
  #ifdef CONFIG_ATA_ACPI
  	struct ata_acpi_gtm	__acpi_init_gtm; /* use ata_acpi_init_gtm() */
  #endif
