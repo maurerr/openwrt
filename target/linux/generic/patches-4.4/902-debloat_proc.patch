@@ -122,31 +122,13 @@
  		return -ENOMEM;
 --- a/mm/vmalloc.c
 +++ b/mm/vmalloc.c
-@@ -2698,6 +2698,8 @@ static const struct file_operations proc
+@@ -2701,6 +2701,8 @@ static const struct file_operations proc
  
  static int __init proc_vmalloc_init(void)
  {
 +	if (IS_ENABLED(CONFIG_PROC_STRIPPED))
 +		return 0;
  	proc_create("vmallocinfo", S_IRUSR, NULL, &proc_vmalloc_operations);
- 	return 0;
- }
---- a/mm/vmstat.c
-+++ b/mm/vmstat.c
-@@ -1588,10 +1588,12 @@ static int __init setup_vmstat(void)
- 	cpu_notifier_register_done();
- #endif
- #ifdef CONFIG_PROC_FS
--	proc_create("buddyinfo", S_IRUGO, NULL, &fragmentation_file_operations);
--	proc_create("pagetypeinfo", S_IRUGO, NULL, &pagetypeinfo_file_ops);
-+	if (!IS_ENABLED(CONFIG_PROC_STRIPPED)) {
-+		proc_create("buddyinfo", S_IRUGO, NULL, &fragmentation_file_operations);
-+		proc_create("pagetypeinfo", S_IRUGO, NULL, &pagetypeinfo_file_ops);
-+		proc_create("zoneinfo", S_IRUGO, NULL, &proc_zoneinfo_file_operations);
-+	}
- 	proc_create("vmstat", S_IRUGO, NULL, &proc_vmstat_file_operations);
--	proc_create("zoneinfo", S_IRUGO, NULL, &proc_zoneinfo_file_operations);
- #endif
  	return 0;
  }
 --- a/net/8021q/vlanproc.c
@@ -173,7 +155,7 @@
  		goto err;
 --- a/net/core/sock.c
 +++ b/net/core/sock.c
-@@ -3048,6 +3048,8 @@ static __net_initdata struct pernet_oper
+@@ -3051,6 +3051,8 @@ static __net_initdata struct pernet_oper
  
  static int __init proto_init(void)
  {
@@ -184,7 +166,7 @@
  
 --- a/net/ipv4/fib_trie.c
 +++ b/net/ipv4/fib_trie.c
-@@ -2651,10 +2651,12 @@ static const struct file_operations fib_
+@@ -2656,10 +2656,12 @@ static const struct file_operations fib_
  
  int __net_init fib_proc_init(struct net *net)
  {
@@ -199,7 +181,7 @@
  			 &fib_triestat_fops))
  		goto out2;
  
-@@ -2664,17 +2666,21 @@ int __net_init fib_proc_init(struct net
+@@ -2669,17 +2671,21 @@ int __net_init fib_proc_init(struct net
  	return 0;
  
  out3:
@@ -239,7 +221,7 @@
  
 --- a/net/ipv4/route.c
 +++ b/net/ipv4/route.c
-@@ -423,6 +423,9 @@ static struct pernet_operations ip_rt_pr
+@@ -421,6 +421,9 @@ static struct pernet_operations ip_rt_pr
  
  static int __init ip_rt_proc_init(void)
  {
