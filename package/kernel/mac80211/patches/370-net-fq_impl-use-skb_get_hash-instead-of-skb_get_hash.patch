@@ -1,0 +1,11 @@
+--- a/include/net/fq_impl.h
++++ b/include/net/fq_impl.h
+@@ -105,7 +105,7 @@ static struct fq_flow *fq_flow_classify(struct fq *fq,
+ 
+        lockdep_assert_held(&fq->lock);
+ 
+-       hash = skb_get_hash_perturb(skb, fq->perturbation);
++       hash = skb_get_hash(skb);
+        idx = reciprocal_scale(hash, fq->flows_cnt);
+        flow = &fq->flows[idx];
+ 
