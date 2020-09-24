@@ -1,0 +1,185 @@
+
+m 8375e570059c6760651fe0e7de8d218b5b17c66c Mon Sep 17 00:00:00 2001
+From: Steffan Karger <steffan@karger.me>
+Date: Tue, 9 Oct 2018 22:43:15 +0200
+Subject: [PATCH] openvpn: List ChaCha20-Poly1305 as stream cipher
+
+As Antonio pointed out, "8-bit block cipher" is a bit funny. So teach
+print_cipher() to print such cipher as "stream cipher".
+
+Because I didn't want to write the same code twice, I decided to merge the
+two print_cipher() implementations into one shared function. That should
+make it easier to keep both backends consistent.
+
+Signed-off-by: Steffan Karger <steffan@karger.me>
+Acked-by: Antonio Quartulli <antonio@openvpn.net>
+Message-Id: <20181009204315.8262-1-steffan@karger.me>
+URL: https://www.mail-archive.com/openvpn-devel@lists.sourceforge.net/msg17682.html
+Signed-off-by: Gert Doering <gert@greenie.muc.de>
+---
+ .../openvpn-2.4.x/src/openvpn/crypto.c        | 27 +++++++++++++++++++
+ .../openvpn-2.4.x/src/openvpn/crypto.h        |  3 +++
+ .../src/openvpn/crypto_mbedtls.c              | 24 +++--------------
+ .../src/openvpn/crypto_mbedtls.h              |  4 +++
+ .../src/openvpn/crypto_openssl.c              | 15 -----------
+ .../src/openvpn/crypto_openssl.h              |  4 +++
+ 6 files changed, 41 insertions(+), 36 deletions(-)
+
+diff --git a/src/openvpn/crypto.c b/src/openvpn/crypto.c
+index cd816bdc2..2a387caa1 100644
+--- a/src/openvpn/crypto.c
++++ b/src/openvpn/crypto.c
+@@ -1825,6 +1825,33 @@ get_random(void)
+     return l;
+ }
+ 
++void
++print_cipher(const cipher_kt_t *cipher)
++{
++    const char *var_key_size = cipher_kt_var_key_size(cipher) ?
++        " by default" : "";
++
++    printf("%s  (%d bit key%s, ",
++           translate_cipher_name_to_openvpn(cipher_kt_name(cipher)),
++           cipher_kt_key_size(cipher) * 8, var_key_size);
++
++    if (cipher_kt_block_size(cipher) == 1)
++    {
++        printf("stream cipher");
++    }
++    else
++    {
++        printf("%d bit block", cipher_kt_block_size(cipher) * 8);
++    }
++
++    if (!cipher_kt_mode_cbc(cipher))
++    {
++        printf(", TLS client/server mode only");
++    }
++
++    printf(")\n");
++}
++
+ static const cipher_name_pair *
+ get_cipher_name_pair(const char *cipher_name)
+ {
+diff --git a/src/openvpn/crypto.h b/src/openvpn/crypto.h
+index 185bfd32d..4c3378754 100644
+--- a/src/openvpn/crypto.h
++++ b/src/openvpn/crypto.h
+@@ -465,6 +465,9 @@ void prng_bytes(uint8_t *output, int len);
+ 
+ void prng_uninit(void);
+ 
++/** Print a cipher list entry */
++void print_cipher(const cipher_kt_t *cipher);
++
+ void test_crypto(struct crypto_options *co, struct frame *f);
+ 
+ 
+diff --git a/src/openvpn/crypto_mbedtls.c b/src/openvpn/crypto_mbedtls.c
+index 1d5b6b57f..0f2e48e3c 100644
+--- a/src/openvpn/crypto_mbedtls.c
++++ b/src/openvpn/crypto_mbedtls.c
+@@ -39,6 +39,7 @@
+ #include "errlevel.h"
+ #include "basic.h"
+ #include "buffer.h"
++#include "crypto.h"
+ #include "integer.h"
+ #include "crypto_backend.h"
+ #include "otime.h"
+@@ -138,26 +139,6 @@ const cipher_name_pair cipher_name_translation_table[] = {
+ const size_t cipher_name_translation_table_count =
+     sizeof(cipher_name_translation_table) / sizeof(*cipher_name_translation_table);
+ 
+-static void
+-print_cipher(const cipher_kt_t *info)
+-{
+-    if (info && (cipher_kt_mode_cbc(info)
+-#ifdef HAVE_AEAD_CIPHER_MODES
+-                 || cipher_kt_mode_aead(info)
+-#endif
+-                 ))
+-    {
+-        const char *ssl_only = cipher_kt_mode_cbc(info) ?
+-                               "" : ", TLS client/server mode only";
+-        const char *var_key_size = info->flags & MBEDTLS_CIPHER_VARIABLE_KEY_LEN ?
+-                                   " by default" : "";
+-
+-        printf("%s  (%d bit key%s, %d bit block%s)\n",
+-               cipher_kt_name(info), cipher_kt_key_size(info) * 8, var_key_size,
+-               cipher_kt_block_size(info) * 8, ssl_only);
+-    }
+-}
+-
+ void
+ show_available_ciphers(void)
+ {
+@@ -173,7 +154,8 @@ show_available_ciphers(void)
+     while (*ciphers != 0)
+     {
+         const cipher_kt_t *info = mbedtls_cipher_info_from_type(*ciphers);
+-        if (info && !cipher_kt_insecure(info))
++        if (info && !cipher_kt_insecure(info)
++            && (cipher_kt_mode_aead(info) || cipher_kt_mode_cbc(info)))
+         {
+             print_cipher(info);
+         }
+diff --git a/src/openvpn/crypto_mbedtls.h b/src/openvpn/crypto_mbedtls.h
+index 452b06ed2..81b542bc7 100644
+--- a/src/openvpn/crypto_mbedtls.h
++++ b/src/openvpn/crypto_mbedtls.h
+@@ -146,5 +146,9 @@ mbed_log_func_line_lite(unsigned int flags, int errval,
+ #define mbed_ok(errval) \
+     mbed_log_func_line_lite(D_CRYPT_ERRORS, errval, __func__, __LINE__)
+ 
++static inline bool cipher_kt_var_key_size(const cipher_kt_t *cipher)
++{
++    return cipher->flags & MBEDTLS_CIPHER_VARIABLE_KEY_LEN;
++}
+ 
+ #endif /* CRYPTO_MBEDTLS_H_ */
+diff --git a/src/openvpn/crypto_openssl.c b/src/openvpn/crypto_openssl.c
+index 2907b0638..b0e1da879 100644
+--- a/src/openvpn/crypto_openssl.c
++++ b/src/openvpn/crypto_openssl.c
+@@ -274,21 +274,6 @@ cipher_name_cmp(const void *a, const void *b)
+     return strcmp(cipher_name_a, cipher_name_b);
+ }
+ 
+-static void
+-print_cipher(const EVP_CIPHER *cipher)
+-{
+-    const char *var_key_size =
+-        (EVP_CIPHER_flags(cipher) & EVP_CIPH_VARIABLE_LENGTH) ?
+-        " by default" : "";
+-    const char *ssl_only = cipher_kt_mode_cbc(cipher) ?
+-                           "" : ", TLS client/server mode only";
+-
+-    printf("%s  (%d bit key%s, %d bit block%s)\n",
+-           translate_cipher_name_to_openvpn(EVP_CIPHER_name(cipher)),
+-           EVP_CIPHER_key_length(cipher) * 8, var_key_size,
+-           cipher_kt_block_size(cipher) * 8, ssl_only);
+-}
+-
+ void
+ show_available_ciphers(void)
+ {
+diff --git a/src/openvpn/crypto_openssl.h b/src/openvpn/crypto_openssl.h
+index 0a413705f..1ea3e858a 100644
+--- a/src/openvpn/crypto_openssl.h
++++ b/src/openvpn/crypto_openssl.h
+@@ -101,5 +101,9 @@ void crypto_print_openssl_errors(const unsigned int flags);
+         msg((flags), __VA_ARGS__); \
+     } while (false)
+ 
++static inline bool cipher_kt_var_key_size(const cipher_kt_t *cipher)
++{
++    return EVP_CIPHER_flags(cipher) & EVP_CIPH_VARIABLE_LENGTH;
++}
+ 
+ #endif /* CRYPTO_OPENSSL_H_ */
+-- 
+GitLab
+
