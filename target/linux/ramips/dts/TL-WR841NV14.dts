@@ -14,8 +14,6 @@
 		led-boot = &led_wlan;
 		led-failsafe = &led_wlan;
 		led-upgrade = &led_wlan;
-
-		led-wlan = &led_wlan;
 	};
 
 	chosen {
@@ -110,13 +108,17 @@
 &wmac {
 	status = "okay";
 	mtd-mac-address = <&factory 0xf100>;
-	mediatek,mtd-eeprom = <&factory 0x10000>;
 };
 
 &ethernet {
 	mtd-mac-address = <&factory 0xf100>;
-	mediatek,portmap = "wllll";
 };
+
+&esw {
+	mediatek,portmap = <0x3e>;
+};
+
+
 
 &pinctrl {
 	state_default: pinctrl0 {
