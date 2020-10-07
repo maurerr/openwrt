@@ -464,7 +464,7 @@ ramips_board_detect() {
 		name="timecloud"
 		;;
 	*"TL-WR841N v14")
-		name="tplink_tl-wr841n-v14"
+		name="tplink,tl-wr841n-v14"
 		;;
 	*"UBNT-ERX")
 		name="ubnt-erx"
