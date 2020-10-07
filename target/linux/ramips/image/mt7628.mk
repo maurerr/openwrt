@@ -2,6 +2,22 @@
 # MT7628 Profiles
 #
 
+define Device/tplink
+  TPLINK_FLASHLAYOUT :=
+  TPLINK_HWID :=
+  TPLINK_HWREV :=
+  TPLINK_HWREVADD :=
+  TPLINK_HVERSION :=
+  KERNEL := $(KERNEL_DTB)
+  KERNEL_INITRAMFS := $(KERNEL_DTB) | tplink-v2-header -e
+  IMAGES += tftp-recovery.bin
+  IMAGE/factory.bin := tplink-v2-image -e
+  IMAGE/tftp-recovery.bin := pad-extra 128k | $$(IMAGE/factory.bin)
+  IMAGE/sysupgrade.bin := tplink-v2-image -s -e | append-metadata | \
+	check-size $$$$(IMAGE_SIZE)
+endef
+DEVICE_VARS += TPLINK_FLASHLAYOUT TPLINK_HWID TPLINK_HWREV TPLINK_HWREVADD TPLINK_HVERSION
+
 define Device/mt7628
   DTS := MT7628
   BLOCKSIZE := 64k
@@ -18,6 +34,20 @@ define Device/miwifi-nano
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
 endef
 TARGET_DEVICES += miwifi-nano
+
+define Device/tplink_tl-wr841n-v14
+  $(Device/tplink)
+  DTS := TL-WR841NV14
+  IMAGE_SIZE := 3968k
+  DEVICE_TITLE := TP-Link TL-WR841N v14
+  TPLINK_FLASHLAYOUT := 4Mmtk
+  TPLINK_HWID := 0x08410014
+  TPLINK_HWREV := 0x1
+  TPLINK_HWREVADD := 0x14
+  TPLINK_HVERSION := 3
+  IMAGE/tftp-recovery.bin := pad-extra 64k | $$(IMAGE/factory.bin)
+endef
+TARGET_DEVICES += tplink_tl-wr841n-v14
 
 define Device/vocore2
   DTS := VOCORE2

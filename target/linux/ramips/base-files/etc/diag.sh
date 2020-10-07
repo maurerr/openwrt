@@ -217,6 +217,9 @@ get_status_led() {
 	vocore2)
 		status_led="$board:fuchsia:status"
 		;;
+	tplink,tl-wr841n-v14)
+                status_led="$board:green:wan"
+                ;;
 	w306r-v20|\
 	witi|\
 	zbt-wr8305rt)
