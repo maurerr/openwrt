@@ -145,7 +145,6 @@ ramips_setup_interfaces()
 	rb750gr3|\
 	rt-n14u|\
 	ubnt-erx|\
-        tplink,tl-wr841n-v14|\
 	ur-326n4g|\
 	wrtnode|\
 	wrtnode2p | \
@@ -255,6 +254,7 @@ ramips_setup_interfaces()
 		;;
 	tew-691gr|\
 	tew-692gr|\
+	tplink,tl-wr841n-v14|\
 	wlr-6000)
 		ucidef_add_switch "switch0" \
 			"1:lan" "2:lan" "3:lan" "4:lan" "5:wan" "0@eth0"
