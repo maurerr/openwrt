@@ -72,6 +72,9 @@ ramips_setup_interfaces()
 	3g-6200n|\
 	ac1200pro|\
 	ai-br100|\
+	asus,rt-n10p-v3|\
+	asus,rt-n11p-b1|\
+	asus,rt-n12-vp-b1|\
 	d240|\
 	db-wrt01|\
 	dir-300-b7|\
@@ -145,7 +148,10 @@ ramips_setup_interfaces()
 	rb750gr3|\
 	rt-n14u|\
 	ubnt-erx|\
-        tplink,tl-wr841n-v14|\
+	tplink,tl-wr840n-v6|\
+	tplink,tl-wr840n-v6.1|\
+	tplink,tl-wr840n-v6.2|\
+    tplink,tl-wr841n-v14|\
 	ur-326n4g|\
 	wrtnode|\
 	wrtnode2p | \

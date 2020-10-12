@@ -27,7 +27,6 @@ PKG_INSTALL:=1
 PKG_MAINTAINER:=Felix Fietkau <nbd@nbd.name>
 
 include $(INCLUDE_DIR)/package.mk
-include $(INCLUDE_DIR)/host-build.mk
 
 TARGET_CFLAGS += $(FPIC) -Wno-implicit-fallthrough
 

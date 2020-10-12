@@ -17,6 +17,9 @@ get_status_led() {
 	ar670w|\
 	ar725w|\
 	asl26555|\
+	asus,rt-n10p-v3|\
+	asus,rt-n11p-b1|\
+	asus,rt-n12-vp-b1|\
 	br-6425|\
 	br-6475nd|\
 	c50|\
@@ -35,6 +38,9 @@ get_status_led() {
 	nbg-419n|\
 	nbg-419n2|\
 	pwh2004|\
+	tplink,tl-wr840n-v6|\
+	tplink,tl-wr840n-v6.1|\
+	tplink,tl-wr840n-v6.2|\
 	vr500|\
 	wnce2001|\
 	wndr3700v5|\
@@ -218,7 +224,7 @@ get_status_led() {
 		status_led="$board:fuchsia:status"
 		;;
 	tplink,tl-wr841n-v14)
-                status_led="$board:green:wan"
+                status_led="$board:orange:wan"
                 ;;
 	w306r-v20|\
 	witi|\
