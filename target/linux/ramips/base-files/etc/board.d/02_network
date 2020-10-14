@@ -149,7 +149,9 @@ ramips_setup_interfaces()
 	rt-n14u|\
 	ubnt-erx|\
 	tplink,tl-wr840n-v6|\
-        tplink,tl-wr841n-v14|\
+	tplink,tl-wr840n-v6.1|\
+	tplink,tl-wr840n-v6.2|\
+    tplink,tl-wr841n-v14|\
 	ur-326n4g|\
 	wrtnode|\
 	wrtnode2p | \

@@ -84,6 +84,44 @@ define Device/tplink_tl-wr840n-v6
 endef
 TARGET_DEVICES += tplink_tl-wr840n-v6
 
+define Device/tplink_tl-wr840n-v6.1
+  $(Device/tplink-v2)
+  DTS := TL-WR840NV6.1
+  IMAGE_SIZE := 3968k
+  DEVICE_TITLE := TP-Link TL-WR840N v6.1
+  DEVICE_VENDOR := TP-Link
+  DEVICE_MODEL := TL-WR840N
+  DEVICE_VARIANT := v6.1
+  TPLINK_FLASHLAYOUT := 4Mmtk
+  TPLINK_HWID := 0x08400006
+  TPLINK_HWREV := 0x1
+  TPLINK_HWREVADD := 0x6
+  TPLINK_HVERSION := 3
+  IMAGES := sysupgrade.bin tftp-recovery.bin
+  SUPPORTED_DEVICES += tl-wr840n-v6.1
+  IMAGE/tftp-recovery.bin := pad-extra 64k | $$(IMAGE/factory.bin)
+endef
+TARGET_DEVICES += tplink_tl-wr840n-v6.1
+
+define Device/tplink_tl-wr840n-v6.2
+  $(Device/tplink-v2)
+  DTS := TL-WR840NV6.2
+  IMAGE_SIZE := 3968k
+  DEVICE_TITLE := TP-Link TL-WR840N v6.1
+  DEVICE_VENDOR := TP-Link
+  DEVICE_MODEL := TL-WR840N
+  DEVICE_VARIANT := v6.2
+  TPLINK_FLASHLAYOUT := 4Mmtk
+  TPLINK_HWID := 0x08400006
+  TPLINK_HWREV := 0x1
+  TPLINK_HWREVADD := 0x7
+  TPLINK_HVERSION := 3
+  IMAGES := sysupgrade.bin tftp-recovery.bin
+  SUPPORTED_DEVICES += tl-wr840n-v6.2
+  IMAGE/tftp-recovery.bin := pad-extra 64k | $$(IMAGE/factory.bin)
+endef
+TARGET_DEVICES += tplink_tl-wr840n-v6.2
+
 define Device/tplink_tl-wr841n-v14
   $(Device/tplink)
   DTS := TL-WR841NV14

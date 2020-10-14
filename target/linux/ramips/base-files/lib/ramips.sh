@@ -475,6 +475,12 @@ ramips_board_detect() {
 	*"TL-WR840N v6")
 		name="tplink,tl-wr840n-v6"
 		;;
+	*"TL-WR840N v6.1")
+		name="tplink,tl-wr840n-v6.1"
+		;;
+	*"TL-WR840N v6.2")
+		name="tplink,tl-wr840n-v6.2"
+		;;
 	*"TL-WR841N v14")
 		name="tplink,tl-wr841n-v14"
 		;;

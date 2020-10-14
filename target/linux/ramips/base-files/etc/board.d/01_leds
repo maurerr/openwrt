@@ -321,6 +321,14 @@ tplink,tl-wr840n-v6)
 	ucidef_set_led_switch "lan" "lan" "$boardname:green:lan" "switch0" "0x1e"
 	ucidef_set_led_switch "wan" "wan" "$boardname:green:wan" "switch0" "0x01"
     ucidef_set_led_wlan "wifi_led" "wifi" "green:wlan" "phy0tpt"
+tplink,tl-wr840n-v6.1)
+	ucidef_set_led_switch "lan" "lan" "$boardname:green:lan" "switch0" "0x1e"
+	ucidef_set_led_switch "wan" "wan" "$boardname:green:wan" "switch0" "0x01"
+    ucidef_set_led_wlan "wifi_led" "wifi" "green:wlan" "phy0tpt"
+tplink,tl-wr840n-v6.2)
+	ucidef_set_led_switch "lan" "lan" "$boardname:green:lan" "switch0" "0x1e"
+	ucidef_set_led_switch "wan" "wan" "$boardname:green:wan" "switch0" "0x01"
+    ucidef_set_led_wlan "wifi_led" "wifi" "green:wlan" "phy0tpt"
 tplink,tl-wr841n-v14)
 	ucidef_set_led_switch "lan" "lan" "$boardname:green:lan" "switch0" "0x1e"
 	ucidef_set_led_switch "wan" "wan" "$boardname:green:wan" "switch0" "0x01"
