@@ -73,9 +73,9 @@ asl26555)
 	set_wifi_led "$board:green:wlan"
 	set_usb_led "$board:green:3g"
 	;;
-asus,rt-n10p-v3|\
-asus,rt-n11p-b1|\
-asus,rt-n12-vp-b1)
+asus_rt-n10p-v3|\
+asus_rt-n11p-b1|\
+asus_rt-n12-vp-b1)
 	ucidef_set_led_switch "lan" "lan" "$boardname:green:lan" "switch0" "0xf"
 	ucidef_set_led_switch "wan" "wan" "$boardname:green:wan" "switch0" "0x10"
 	;;
@@ -317,11 +317,11 @@ tiny-ac)
 	set_wifi_led "$board:orange:wifi"
 	set_usb_led "$board:green:usb"
 	;;
-tplink,tl-wr840n-v6)
+tplink_tl-wr840n-v6)
 	ucidef_set_led_switch "lan" "lan" "$boardname:green:lan" "switch0" "0x1e"
 	ucidef_set_led_switch "wan" "wan" "$boardname:green:wan" "switch0" "0x01"
     ucidef_set_led_wlan "wifi_led" "wifi" "green:wlan" "phy0tpt"
-tplink,tl-wr841n-v14)
+tplink_tl-wr841n-v14)
 	ucidef_set_led_switch "lan" "lan" "$boardname:green:lan" "switch0" "0x1e"
 	ucidef_set_led_switch "wan" "wan" "$boardname:green:wan" "switch0" "0x01"
     ucidef_set_led_wlan "wifi_led" "wifi" "green:wlan" "phy0tpt"

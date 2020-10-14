@@ -6,7 +6,7 @@
 #include <dt-bindings/input/input.h>
 
 / {
-	compatible = "tplink,tl-wr840n-v6", "mediatek,mt7628an-soc";
+	compatible = "tplink_tl-wr840n-v6", "mediatek,mt7628an-soc";
 	model = "TP-Link TL-WR840N v6";
 
 	aliases {

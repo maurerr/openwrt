@@ -65,13 +65,13 @@ ramips_board_detect() {
 		name="asl26555-16M"
 		;;
 	*"Asus RT-N10P V3")
-		name="asus,rt-n10p-v3"
+		name="asus_rt-n10p-v3"
 		;;
 	*"Asus RT-N11P B1")
-		name="asus,rt-n11p-b1"
+		name="asus_rt-n11p-b1"
 		;;
 	*"Asus RT-N12 VP B1")
-		name="asus,rt-n12-vp-b1"
+		name="asus_rt-n12-vp-b1"
 		;;
 	*"ATP-52B")
 		name="atp-52b"
@@ -473,10 +473,10 @@ ramips_board_detect() {
 		name="timecloud"
 		;;
 	*"TL-WR840N v6")
-		name="tplink,tl-wr840n-v6"
+		name="tplink_tl-wr840n-v6"
 		;;
 	*"TL-WR841N v14")
-		name="tplink,tl-wr841n-v14"
+		name="tplink_tl-wr841n-v14"
 		;;
 	*"UBNT-ERX")
 		name="ubnt-erx"
