@@ -39,8 +39,6 @@ get_status_led() {
 	nbg-419n2|\
 	pwh2004|\
 	tplink,tl-wr840n-v6|\
-	tplink,tl-wr840n-v6.1|\
-	tplink,tl-wr840n-v6.2|\
 	vr500|\
 	wnce2001|\
 	wndr3700v5|\

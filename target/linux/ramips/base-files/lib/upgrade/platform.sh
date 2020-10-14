@@ -209,10 +209,8 @@ platform_check_image() {
 		;;
 	c20i|\
 	c50|\
-    tplink,tl-wr841n-v14|\
+        tplink,tl-wr841n-v14|\
 	tplink,tl-wr840n-v6|\
-	tplink,tl-wr840n-v6.1|\
-	tplink,tl-wr840n-v6.2|\
 	mr200)
 		[ "$magic" != "03000000" ] && {
 			echo "Invalid image type."
