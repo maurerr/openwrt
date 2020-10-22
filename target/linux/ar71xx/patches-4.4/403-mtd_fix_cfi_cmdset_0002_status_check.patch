@@ -1,6 +1,6 @@
 --- a/drivers/mtd/chips/cfi_cmdset_0002.c
 +++ b/drivers/mtd/chips/cfi_cmdset_0002.c
-@@ -1656,6 +1656,8 @@ static int __xipram do_write_oneword(str
+@@ -1655,6 +1655,8 @@ static int __xipram do_write_oneword(str
  			goto retry;
  		}
  	}

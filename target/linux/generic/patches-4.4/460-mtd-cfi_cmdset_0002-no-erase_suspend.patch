@@ -1,6 +1,6 @@
 --- a/drivers/mtd/chips/cfi_cmdset_0002.c
 +++ b/drivers/mtd/chips/cfi_cmdset_0002.c
-@@ -809,7 +809,7 @@ static int get_chip(struct map_info *map
+@@ -808,7 +808,7 @@ static int get_chip(struct map_info *map
  		return 0;
  
  	case FL_ERASING:

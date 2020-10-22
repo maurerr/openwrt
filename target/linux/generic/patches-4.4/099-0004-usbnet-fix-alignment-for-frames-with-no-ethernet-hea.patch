@@ -26,7 +26,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/net/usb/qmi_wwan.c
 +++ b/drivers/net/usb/qmi_wwan.c
-@@ -70,9 +70,11 @@ static void qmi_wwan_netdev_setup(struct
+@@ -74,9 +74,11 @@ static void qmi_wwan_netdev_setup(struct
  		net->hard_header_len = 0;
  		net->addr_len        = 0;
  		net->flags           = IFF_POINTOPOINT | IFF_NOARP | IFF_MULTICAST;
@@ -40,7 +40,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
  
 --- a/drivers/net/usb/usbnet.c
 +++ b/drivers/net/usb/usbnet.c
-@@ -482,7 +482,10 @@ static int rx_submit (struct usbnet *dev
+@@ -490,7 +490,10 @@ static int rx_submit (struct usbnet *dev
  		return -ENOLINK;
  	}
  

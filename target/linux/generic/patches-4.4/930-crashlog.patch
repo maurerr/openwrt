@@ -20,7 +20,7 @@
 +#endif
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1296,6 +1296,10 @@ config RELAY
+@@ -1306,6 +1306,10 @@ config RELAY
  
  	  If unsure, say N.
  

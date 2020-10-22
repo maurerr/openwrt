@@ -18,7 +18,7 @@
  	}
  	if (slave->offset == MTDPART_OFS_RETAIN) {
  		slave->offset = cur_offset;
-@@ -679,6 +677,17 @@ run_parsers_by_type(struct mtd_part *sla
+@@ -690,6 +688,17 @@ run_parsers_by_type(struct mtd_part *sla
  	return nr_parts;
  }
  
@@ -36,7 +36,7 @@
  #ifdef CONFIG_MTD_SPLIT_FIRMWARE_NAME
  #define SPLIT_FIRMWARE_NAME	CONFIG_MTD_SPLIT_FIRMWARE_NAME
  #else
-@@ -978,6 +987,24 @@ int mtd_is_partition(const struct mtd_in
+@@ -1003,6 +1012,24 @@ int mtd_is_partition(const struct mtd_in
  }
  EXPORT_SYMBOL_GPL(mtd_is_partition);
  

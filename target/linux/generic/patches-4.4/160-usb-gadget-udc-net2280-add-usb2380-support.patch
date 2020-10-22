@@ -211,7 +211,7 @@ Signed-off-by: Felipe Balbi <felipe.balbi@linux.intel.com>
  		if (pci_enable_msi(pdev))
  			ep_err(dev, "Failed to enable MSI mode\n");
  
-@@ -3758,10 +3758,19 @@ static const struct pci_device_id pci_id
+@@ -3760,10 +3760,19 @@ static const struct pci_device_id pci_id
  	.class =	((PCI_CLASS_SERIAL_USB << 8) | 0xfe),
  	.class_mask =	~0,
  	.vendor =	PCI_VENDOR_ID_PLX,
@@ -232,7 +232,7 @@ Signed-off-by: Felipe Balbi <felipe.balbi@linux.intel.com>
  	 },
  	{
  	.class =	((PCI_CLASS_SERIAL_USB << 8) | 0xfe),
-@@ -3770,7 +3779,7 @@ static const struct pci_device_id pci_id
+@@ -3772,7 +3781,7 @@ static const struct pci_device_id pci_id
  	.device =	0x3382,
  	.subvendor =	PCI_ANY_ID,
  	.subdevice =	PCI_ANY_ID,

@@ -1,6 +1,6 @@
 --- a/drivers/rtc/Kconfig
 +++ b/drivers/rtc/Kconfig
-@@ -612,6 +612,15 @@ config RTC_DRV_S5M
+@@ -613,6 +613,15 @@ config RTC_DRV_S5M
  	  This driver can also be built as a module. If so, the module
  	  will be called rtc-s5m.
  

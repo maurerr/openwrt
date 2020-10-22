@@ -3,7 +3,7 @@ they still want to support gcc 3.3 -- well, we don't.
 
 --- a/arch/powerpc/Makefile
 +++ b/arch/powerpc/Makefile
-@@ -205,7 +205,8 @@ ifeq ($(CONFIG_FUNCTION_TRACER),y)
+@@ -213,7 +213,8 @@ ifeq ($(CONFIG_FUNCTION_TRACER),y)
  KBUILD_CFLAGS		+= -mno-sched-epilog
  endif
  

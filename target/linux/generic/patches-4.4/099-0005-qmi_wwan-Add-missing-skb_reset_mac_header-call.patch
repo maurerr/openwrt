@@ -66,7 +66,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 
 --- a/drivers/net/usb/qmi_wwan.c
 +++ b/drivers/net/usb/qmi_wwan.c
-@@ -203,6 +203,7 @@ static int qmi_wwan_rx_fixup(struct usbn
+@@ -207,6 +207,7 @@ static int qmi_wwan_rx_fixup(struct usbn
  		return 1;
  	}
  	if (rawip) {

@@ -15,10 +15,10 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
  				BOOTMEM_DEFAULT);
  #endif
 -	device_tree_init();
-
-        /*
-         * In order to reduce the possibility of kernel panic when failed to
-@@ -881,6 +880,7 @@ void __init setup_arch(char **cmdline_p)
+ 
+ 	/*
+ 	 * In order to reduce the possibility of kernel panic when failed to
+@@ -891,6 +890,7 @@ void __init setup_arch(char **cmdline_p)
  	prefill_possible_map();
  
  	cpu_cache_init();
