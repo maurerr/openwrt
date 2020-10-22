@@ -113,6 +113,7 @@
 
 &ethernet {
 	mtd-mac-address = <&factory 0xf100>;
+        mtd-mac-address-increment = <1>;
 };
 
 &esw {
