@@ -173,6 +173,3 @@
 		};
 	};
 };
-
-gpio-controller;
-#gpio-cells = <2>;
