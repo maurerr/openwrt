@@ -1,0 +1,111 @@
+--- /dev/null
++++ b/drivers/net/dsa/mt7530-debugfs.c
+@@ -0,0 +1,57 @@
++// SPDX-License-Identifier: GPL-2.0-only
++#include <linux/debugfs.h>
++#include <linux/kernel.h>
++#include <net/dsa.h>
++
++#include "mt7530.h"
++
++static ssize_t led_on_read(struct file *filp, char __user *buffer,
++			   size_t count, loff_t *ppos)
++{
++	struct mt7530_priv *priv = filp->private_data;
++	u32 value = mt7530_read(priv, MT7530_LED_EN);
++	char result[2];
++
++	if (value)
++		result[0] = '1';
++	else
++		result[0] = '0';
++	result[1] = '\n';
++
++	return simple_read_from_buffer(buffer, count, ppos, result,
++				       sizeof(result));
++}
++
++static ssize_t led_on_write(struct file *filp, const char __user *buffer,
++			    size_t count, loff_t *ppos)
++{
++	struct mt7530_priv *priv = filp->private_data;
++
++	if (buffer[0] == '1')
++		mt7530_write(priv, MT7530_LED_EN, 0x77777);
++	else
++		mt7530_write(priv, MT7530_LED_EN, 0);
++
++	return count;
++}
++
++static const struct file_operations led_on_fops = {
++	.owner = THIS_MODULE,
++	.open = simple_open,
++	.read = led_on_read,
++	.write = led_on_write
++};
++
++void mt7530_debugfs_init(struct mt7530_priv *priv)
++{
++	struct dentry *dir;
++
++	dir = debugfs_lookup("mt7530", 0);
++	if (dir == NULL)
++		dir = debugfs_create_dir("mt7530", 0);
++
++	debugfs_create_file("led_on", 0644, dir, priv, &led_on_fops);
++}
++
++MODULE_AUTHOR("Arınç ÜNAL");
++MODULE_LICENSE("GPL");
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -223,7 +223,7 @@ mt7530_mii_read(struct mt7530_priv *priv
+ 	return val;
+ }
+ 
+-static void
++void
+ mt7530_write(struct mt7530_priv *priv, u32 reg, u32 val)
+ {
+ 	mt7530_mutex_lock(priv);
+@@ -253,7 +253,7 @@ _mt7530_read(struct mt7530_dummy_poll *p
+ 	return val;
+ }
+ 
+-static u32
++u32
+ mt7530_read(struct mt7530_priv *priv, u32 reg)
+ {
+ 	struct mt7530_dummy_poll p;
+@@ -2177,6 +2177,8 @@ mt7530_setup(struct dsa_switch *ds)
+ 	u32 id, val;
+ 	int ret, i;
+ 
++	mt7530_debugfs_init(priv);
++
+ 	/* The parent node of master netdev which holds the common system
+ 	 * controller also is the container for two GMACs nodes representing
+ 	 * as two netdev instances.
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -813,4 +813,8 @@ void mt7530_remove_common(struct mt7530_
+ extern const struct dsa_switch_ops mt7530_switch_ops;
+ extern const struct mt753x_info mt753x_table[];
+ 
++void mt7530_debugfs_init(struct mt7530_priv *priv);
++u32 mt7530_read(struct mt7530_priv *priv, u32 reg);
++void mt7530_write(struct mt7530_priv *priv, u32 reg, u32 val);
++
+ #endif /* __MT7530_H */
+--- a/drivers/net/dsa/Makefile
++++ b/drivers/net/dsa/Makefile
+@@ -6,7 +6,7 @@ ifdef CONFIG_NET_DSA_LOOP
+ obj-$(CONFIG_FIXED_PHY)		+= dsa_loop_bdinfo.o
+ endif
+ obj-$(CONFIG_NET_DSA_LANTIQ_GSWIP) += lantiq_gswip.o
+-obj-$(CONFIG_NET_DSA_MT7530)	+= mt7530.o
++obj-$(CONFIG_NET_DSA_MT7530)	+= mt7530.o mt7530-debugfs.o
+ obj-$(CONFIG_NET_DSA_MT7530_MDIO) += mt7530-mdio.o
+ obj-$(CONFIG_NET_DSA_MT7530_MMIO) += mt7530-mmio.o
+ obj-$(CONFIG_NET_DSA_MV88E6060) += mv88e6060.o
