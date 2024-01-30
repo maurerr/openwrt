@@ -114,6 +114,16 @@ define Device/radxa_e25
 endef
 TARGET_DEVICES += radxa_e25
 
+define Device/radxa_e23
+  DEVICE_VENDOR := Radxa
+  DEVICE_MODEL := E23
+  SOC := rk3566
+  DEVICE_DTS := rockchip/rk3566-radxa-e23
+  UBOOT_DEVICE_NAME := radxa-cm3-io-rk3566
+  DEVICE_PACKAGES := kmod-r8169
+endef
+TARGET_DEVICES += radxa_e23
+
 define Device/radxa_rock-pi-4a
   DEVICE_VENDOR := Radxa
   DEVICE_MODEL := ROCK Pi 4A
