@@ -119,8 +119,8 @@ define Device/radxa_e23
   DEVICE_MODEL := E23
   SOC := rk3566
   DEVICE_DTS := rockchip/rk3566-radxa-e23
-  UBOOT_DEVICE_NAME := radxa-cm3-io-rk3566
   DEVICE_PACKAGES := kmod-r8169
+  UBOOT_DEVICE_NAME := radxa-e23-rk3566
 endef
 TARGET_DEVICES += radxa_e23
 
