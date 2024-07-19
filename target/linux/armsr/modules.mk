@@ -92,6 +92,7 @@ define KernelPackage/fsl-enetc-net
     CONFIG_FSL_ENETC_QOS=y
   FILES:= \
     $(LINUX_DIR)/drivers/net/ethernet/freescale/enetc/fsl-enetc.ko \
+    $(LINUX_DIR)/drivers/net/ethernet/freescale/enetc/fsl-enetc-core.ko@ge6.3 \
     $(LINUX_DIR)/drivers/net/ethernet/freescale/enetc/fsl-enetc-vf.ko \
     $(LINUX_DIR)/drivers/net/ethernet/freescale/enetc/fsl-enetc-mdio.ko \
     $(LINUX_DIR)/drivers/net/ethernet/freescale/enetc/fsl-enetc-ierb.ko
@@ -286,6 +287,21 @@ define KernelPackage/octeontx2-net
   AUTOLOAD=$(call AutoLoad,40,rvu_af rvu_mbox rvu_nicpf rvu_nicvf otx2_ptp)
 endef
 $(eval $(call KernelPackage,octeontx2-net))
+
+define KernelPackage/renesas-net-avb
+  SUBMENU:=$(NETWORK_DEVICES_MENU)
+  TITLE:=Renesas network drivers
+  DEPENDS:=@(TARGET_armsr_armv8) +kmod-phylink +kmod-mii +kmod-ptp +kmod-libphy +kmod-mdio-gpio
+  KCONFIG:=CONFIG_RAVB
+  FILES=$(LINUX_DIR)/drivers/net/ethernet/renesas/ravb.ko
+  AUTOLOAD:=$(call AutoProbe,ravb)
+endef
+ 
+define KernelPackage/renesas-net-avb/description
+  Support Renesas RZ platform Ethernet module
+endef
+ 
+$(eval $(call KernelPackage,renesas-net-avb))
 
 define KernelPackage/wdt-sp805
   SUBMENU:=$(OTHER_MENU)

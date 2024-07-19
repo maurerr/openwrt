@@ -91,7 +91,7 @@
 		regulator-name = "usb_vbus";
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
-		gpio = <&gpio 3 GPIO_ACTIVE_HIGH>;
+		gpios = <&gpio 3 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 	};
 };
@@ -102,7 +102,7 @@
 	flash@0 {
 		compatible = "jedec,spi-nor";
 		reg = <0>;
-		spi-max-frequency = <80000000>;
+		spi-max-frequency = <50000000>;
 
 		partitions {
 			compatible = "fixed-partitions";
@@ -206,10 +206,8 @@
 	nvmem-cell-names = "mac-address";
 };
 
-&mdio {
-	ethphy0: ethernet-phy@0 {
-		reg = <0>;
-	};
+&ethphy0 {
+	/delete-property/ interrupts;
 };
 
 &switch0 {

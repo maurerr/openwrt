@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wolfssl
-PKG_VERSION:=5.6.6-stable
+PKG_VERSION:=5.7.2-stable
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/wolfSSL/wolfssl/archive/v$(PKG_VERSION)
-PKG_HASH:=3d2ca672d41c2c2fa667885a80d6fa03c3e91f0f4f72f87aef2bc947e8c87237
+PKG_HASH:=0f2ed82e345b833242705bbc4b08a2a2037a33f7bf9c610efae6464f6b10e305
 
 PKG_FIXUP:=libtool libtool-abiver
 PKG_INSTALL:=1
@@ -50,6 +50,8 @@ PKG_CONFIG_DEPENDS+=\
 	CONFIG_WOLFSSL_HAS_DEVCRYPTO_FULL
 
 include $(INCLUDE_DIR)/package.mk
+
+DISABLE_NLS:=
 
 define Package/libwolfssl/Default
   SECTION:=libs
