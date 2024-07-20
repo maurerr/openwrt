@@ -1,13 +1,3 @@
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -175,6 +175,7 @@ dtb-$(CONFIG_ROCKCHIP_RK3568) += \
- 	rk3566-quartz64-a.dtb \
- 	rk3566-quartz64-b.dtb \
- 	rk3566-radxa-cm3-io.dtb \
-+	rk3566-radxa-e23.dtb \
- 	rk3566-soquartz-blade.dtb \
- 	rk3566-soquartz-cm4.dtb \
- 	rk3566-soquartz-model-a.dtb \
 --- /dev/null
 +++ b/arch/arm/dts/rk3566-radxa-e23-u-boot.dtsi
 @@ -0,0 +1,18 @@
@@ -45,7 +35,7 @@
 +CONFIG_PCI=y
 +CONFIG_CMD_PCI=y
 +CONFIG_RTL8169=y
-+CONFIG_DEFAULT_DEVICE_TREE="rk3566-radxa-e23"
++CONFIG_DEFAULT_DEVICE_TREE="rockchip/rk3566-radxa-e23"
 +CONFIG_ROCKCHIP_RK3568=y
 +CONFIG_SPL_ROCKCHIP_COMMON_BOARD=y
 +CONFIG_SPL_SERIAL=y
@@ -120,7 +110,7 @@
 +CONFIG_USB_DWC3_GENERIC=y
 +CONFIG_ERRNO_STR=y
 --- /dev/null
-+++ b/arch/arm/dts/rk3566-radxa-e23.dts
++++ b/dts/upstream/src/arm64/rockchip/rk3566-radxa-e23.dts
 @@ -0,0 +1,225 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
