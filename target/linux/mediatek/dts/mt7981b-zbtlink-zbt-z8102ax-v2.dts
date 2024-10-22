@@ -65,16 +65,16 @@
 			function = LED_FUNCTION_STATUS;
 		};
 		
-		led_status_modem1: modem1 {
-			label = "modem1:status";
+		led_status_5g1: 5g1 {
+			label = "5g1:status";
 			gpios = <&pio 8 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_BLUE>;
 			function = LED_FUNCTION_USB;
 			function-enumerator = <0>;
 		};
 		
-		led_status_modem2: modem2 {
-			label = "modem2:status";
+		led_status_5g2: 5g2 {
+			label = "5g2:status";
 			gpios = <&pio 13 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_BLUE>;
 			function = LED_FUNCTION_USB;
@@ -99,14 +99,14 @@
 			gpios = <&pio 3 GPIO_ACTIVE_HIGH>;
 		};
 
-		modem1 {
-			gpio-export,name = "modem1";
+		5g1 {
+			gpio-export,name = "5g1";
 			gpio-export,output = <1>;
 			gpios = <&pio 4 GPIO_ACTIVE_HIGH>;
 		};
 
-		modem2 {
-			gpio-export,name = "modem2";
+		5g2 {
+			gpio-export,name = "5g2";
 			gpio-export,output = <1>;
 			gpios = <&pio 5 GPIO_ACTIVE_HIGH>;
 		};
@@ -273,16 +273,16 @@
 			"reset",
 			"watchdog",
 			"pcie",
-			"modem1",
-			"modem2",
+			"5g1",
+			"5g2",
 			"sim1",
 			"sim2",
-			"modem1_status",
+			"5g1_status",
 			"red_status",
 			"green_status",
 			"blue_status",
 			"",
-			"modem2_status";
+			"5g2_status";
 
 	spi0_flash_pins: spi0-pins {
 		mux {
