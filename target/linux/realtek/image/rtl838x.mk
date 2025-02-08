@@ -113,7 +113,7 @@ define Device/hpe_1920-8g-poe-180w
   SOC := rtl8380
   DEVICE_MODEL := 1920-8G-PoE+ 180W (JG922A)
   H3C_DEVICE_ID := 0x00010025
-  SUPPORTED_DEVICES += hpe_1920-8g-poe
+  SUPPORTED_DEVICES += hpe,1920-8g-poe
 endef
 TARGET_DEVICES += hpe_1920-8g-poe-180w
 
@@ -166,6 +166,7 @@ define Device/netgear_nge
   SOC := rtl8380
   IMAGE_SIZE := 14848k
   UIMAGE_MAGIC := 0x4e474520
+  UIMAGE_NAME := 9.9.9.9
   DEVICE_VENDOR := NETGEAR
 endef
 
