@@ -66,12 +66,17 @@
 		};
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		led_status_5g1: 5g1 {
 			label = "5g1:status";
 =======
 		led_status_modem1: modem1 {
 			label = "modem1:status";
 >>>>>>> c7b8162feb (zbt-z8102ax-v2)
+=======
+		led_status_5g1: 5g1 {
+			label = "5g1:status";
+>>>>>>> 36ec3857a0 (z8102ax-v2)
 			gpios = <&pio 8 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_BLUE>;
 			function = LED_FUNCTION_USB;
@@ -79,12 +84,17 @@
 		};
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		led_status_5g2: 5g2 {
 			label = "5g2:status";
 =======
 		led_status_modem2: modem2 {
 			label = "modem2:status";
 >>>>>>> c7b8162feb (zbt-z8102ax-v2)
+=======
+		led_status_5g2: 5g2 {
+			label = "5g2:status";
+>>>>>>> 36ec3857a0 (z8102ax-v2)
 			gpios = <&pio 13 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_BLUE>;
 			function = LED_FUNCTION_USB;
@@ -110,16 +120,22 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		5g1 {
 			gpio-export,name = "5g1";
 =======
 		modem1 {
 			gpio-export,name = "modem1";
 >>>>>>> c7b8162feb (zbt-z8102ax-v2)
+=======
+		5g1 {
+			gpio-export,name = "5g1";
+>>>>>>> 36ec3857a0 (z8102ax-v2)
 			gpio-export,output = <1>;
 			gpios = <&pio 4 GPIO_ACTIVE_HIGH>;
 		};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		5g2 {
 			gpio-export,name = "5g2";
@@ -127,6 +143,10 @@
 		modem2 {
 			gpio-export,name = "modem2";
 >>>>>>> c7b8162feb (zbt-z8102ax-v2)
+=======
+		5g2 {
+			gpio-export,name = "5g2";
+>>>>>>> 36ec3857a0 (z8102ax-v2)
 			gpio-export,output = <1>;
 			gpios = <&pio 5 GPIO_ACTIVE_HIGH>;
 		};
@@ -294,6 +314,7 @@
 			"watchdog",
 			"pcie",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			"5g1",
 			"5g2",
 			"sim1",
@@ -306,15 +327,26 @@
 			"sim2",
 			"modem1_status",
 >>>>>>> c7b8162feb (zbt-z8102ax-v2)
+=======
+			"5g1",
+			"5g2",
+			"sim1",
+			"sim2",
+			"5g1_status",
+>>>>>>> 36ec3857a0 (z8102ax-v2)
 			"red_status",
 			"green_status",
 			"blue_status",
 			"",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			"5g2_status";
 =======
 			"modem2_status";
 >>>>>>> c7b8162feb (zbt-z8102ax-v2)
+=======
+			"5g2_status";
+>>>>>>> 36ec3857a0 (z8102ax-v2)
 
 	spi0_flash_pins: spi0-pins {
 		mux {
