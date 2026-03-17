@@ -9,7 +9,7 @@
 
 / {
 	model = "ZBT Z8102AX EMMC";
-	compatible = "zbtlink,z8102ax-emmc", "zbtlink,zbt-z8102ax-emmc", "mediatek,mt7981";
+	compatible = "zbtlink,zbt-z8102ax-emmc", "mediatek,mt7981";
 
 	aliases {
 		serial0 = &uart0;
