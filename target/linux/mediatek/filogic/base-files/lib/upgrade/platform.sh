@@ -140,7 +140,8 @@ platform_do_upgrade() {
 	smartrg,sdg-8632|\
 	smartrg,sdg-8733|\
 	smartrg,sdg-8733a|\
-	smartrg,sdg-8734)
+	smartrg,sdg-8734|\
+	zbtlink,zbt-z8102ax-emmc)
 		CI_KERNPART="kernel"
 		CI_ROOTPART="rootfs"
 		emmc_do_upgrade "$1"
@@ -312,7 +313,8 @@ platform_check_image() {
 		;;
 	creatlentem,clt-r30b1|\
 	creatlentem,clt-r30b1-112m|\
-	nradio,c8-668gl)
+	nradio,c8-668gl|\
+	zbtlink,zbt-z8102ax-emmc)
 		# tar magic `ustar`
 		magic="$(dd if="$1" bs=1 skip=257 count=5 2>/dev/null)"
 
@@ -368,7 +370,8 @@ platform_copy_config() {
 	smartrg,sdg-8733|\
 	smartrg,sdg-8733a|\
 	smartrg,sdg-8734|\
-	ubnt,unifi-6-plus)
+	ubnt,unifi-6-plus|\
+	zbtlink,zbt-z8102ax-emmc)
 		emmc_copy_config
 		;;
 	esac
