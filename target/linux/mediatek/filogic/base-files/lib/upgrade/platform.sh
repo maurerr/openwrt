@@ -370,7 +370,8 @@ platform_copy_config() {
 	smartrg,sdg-8733|\
 	smartrg,sdg-8733a|\
 	smartrg,sdg-8734|\
-	ubnt,unifi-6-plus)
+	ubnt,unifi-6-plus|\
+	zbtlink,zbt-z8102ax-emmc)
 		emmc_copy_config
 		;;
 	esac
