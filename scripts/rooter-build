@@ -1,6 +1,6 @@
 #!/bin/sh
 # ROOter model-driven build wrapper for OpenWrt 25.12.x.
-# Reproduces the original Z8102V2 ROOter package selection:
+# Reproduces the original Z8102 / Z8102V2 ROOter package selection:
 #   normal image: ext-rooter-lite
 #   MWAN3 image:  ext-rooter16 (which depends on ext-rooter-lite)
 # The old generated .config is NOT copied into 25.12.x.
@@ -18,14 +18,13 @@ die() { echo "ERROR: $*" >&2; exit 1; }
 usage() {
     cat >&2 <<EOF
 Usage:
+  $0 Z8102
+  $0 Z8102-mwan3
   $0 Z8102V2
   $0 Z8102V2-mwan3
-  $0 -e Z8102V2
-  $0 -eb Z8102V2
-  $0 -b Z8102V2
-  $0 -e Z8102V2-mwan3
-  $0 -eb Z8102V2-mwan3
-  $0 -b Z8102V2-mwan3
+  $0 -e <model>
+  $0 -eb <model>
+  $0 -b <model>
 EOF
     exit 2
 }
@@ -74,6 +73,13 @@ select_model() {
             ;;
         Z8102V2)
             MODEL="Z8102V2"
+            ;;
+        Z8102-MWAN3)
+            MODEL="Z8102"
+            MWAN3=1
+            ;;
+        Z8102)
+            MODEL="Z8102"
             ;;
         *)
             die "unknown model: $1"
@@ -206,7 +212,7 @@ case "$1" in
         [ $# -ge 2 ] || usage
         build_saved "$2" "${3:-}"
         ;;
-    Z8102V2|Z8102V2-mwan3)
+    Z8102|z8102|Z8102-mwan3|z8102-mwan3|Z8102-MWAN3|Z8102V2|z8102v2|Z8102V2-mwan3|z8102v2-mwan3|Z8102V2-MWAN3)
         build_model "$1"
         ;;
     *)
