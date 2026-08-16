@@ -1,0 +1,231 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+
+	<link rel="stylesheet" href="#LUCIS#rooter/css/iconmoon_splash.css">
+	<link rel="stylesheet" href="#LUCIS#rooter/css/splash.css">
+	
+	<link rel="SHORTCUT ICON" href="luci-static/rooter/img/favicon.gif">
+	<link rel="icon" type="image/gif" href="luci-static/rooter/img/favicon.gif">
+</head>
+<script src="luci-static/material/js/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+    window.onload = startInterval;
+    function startInterval()
+    {
+        setInterval("startTime();",1000);
+		setInterval("bandTime();",600000);
+    }
+    
+    function startTime()
+    {
+         $('#modem').load(document.URL +  ' #modem'); 
+    }
+	
+	function bandTime()
+    {
+         $('#band').load(document.URL +  ' #band');  
+    }
+	
+  </script>
+<body id='rooterSplashStatus' class='rooterSplash' >
+	#TITLEBAR#
+	#BUTTON#
+	<div class='rooterPageContent' id="modem">
+		<div><h2><i class="icon icon-signal"></i> Modem 1 </h2></div>
+		
+		<table class="center">
+			<tr>
+				<td class='msTitle' width="176px" height="45px">
+					<div>Strength (%)</div>
+				<td>
+				<td class='msTitle' width="176px" height="45px">
+					<div>CSQ</div>
+				<td>
+				<td class='msTitle' width="176px" height="45px">
+					<div>RSSI (dBm)</div>
+				<td>
+				<td class='msTitle' width="176px" height="45px">
+					<div>RSCP (dBm) RSRP</div>
+				<td>
+				<td class='msTitle' width="176px" height="45px">
+					<div>ECIO (dB) RSRQ</div>
+				<td>
+				<td class='msTitle' width="176px" height="45px">
+					<div>SINR (dB)</div>
+				<td>
+			</tr>
+			<tr>
+				<td class='tmsCell' width="176px" height="45px" style="color:#FFFF40;">
+					<div>#PER#</div>
+				<td>
+				<td class='tmsCell' height="45px" style="color:#FFFF40;">
+					<div>#CSQ#</div>
+				<td>
+				<td class='tmsCell' width="176px" style="color:#FFFF40;">
+					<div>#RSSI#</div>
+				<td>
+				<td class='tmsCell' width="176px" style="color:#FFFF40;">
+					<div>#RSCP#</div>
+				<td>
+				<td class='tmsCell' width="176px" style="color:#FFFF40;">
+					<div>#RSRQ#</div>
+				<td>
+				<td class='tmsCell' width="176px" style="color:#FFFF40;">
+					<div>#SINR#</div>
+				<td>
+			</tr>
+		</table>
+		<h3><i class="icon icon-podcast"></i> Network </h3>
+		
+		<table class="center">
+			<tr>
+				<td class='msTitle' height="30px">
+					<div>Mode</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>MCC</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>MNC</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>RNC/eNB ID</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>LAC</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>Channel (EARFCN)</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>PCI</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>Bands</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>SIM Status</div>
+				<td>
+			</tr>
+			<tr>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#MODE#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#MCC#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#MNC#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#RNC#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#LAC#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#CHAN#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#CELLID#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#BAND#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#SIM#</div>
+				<td>
+			</tr>
+		</table>
+		<h3><i class="icon icon-plug"></i> Device </h3>
+		<table class="center">
+			<tr>
+				<td class='msTitle' height="30px">
+					<div>Router</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>Modem</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>Provider</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>Protocol</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>Port</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>Temperature</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>External IP</div>
+				<td>
+				<td class='msTitle' height="30px">
+					<div>Interface</div>
+				<td>
+			</tr>
+			<tr>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#ROUTER#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#MODEM#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#PROVIDER#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#PROTO#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#PORT#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#TEMP#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#EXTERNAL#</div>
+				<td>
+				<td class='ttmsCell' height="25px" style="color:#FFFF40;">
+					<div>#INTER#</div>
+				<td>
+			</tr>
+		</table>
+		#MODEM2#
+		#MODEM3#
+		#MODEM4#
+		#MODEM5#
+	</div>
+	<table class="center">
+		<tr>
+			<td height="50px">
+				<div>&nbsp;</div>
+			<td>
+		</tr>
+	</table>
+		
+	#OPEN#
+	
+	<table class="center">
+		<tr>
+			<td height="50px">
+				<div>&nbsp;</div>
+			<td>
+		</tr>
+	</table>
+	
+	#BWMON#
+	
+</body>
+</html>

@@ -1,0 +1,3 @@
+#!/bin/sh
+# Compatibility wrapper for the legacy ROOter buildz8 entry point.
+exec "$(CDPATH= cd -- "$(dirname "$0")" && pwd)/rooter-build" "$@"

@@ -1,0 +1,11 @@
+model=Z8102V2
+variant=standard
+details=ZBT Z8102AX V2
+target=mediatek
+subtarget=filogic
+profile=zbtlink_zbt-z8102ax-v2
+rooter_package=ext-rooter-lite
+openwrt_commit=f0a60eee2fe051741c643ea6118718aae1ef17fb
+image=zbtlink_zbt-z8102ax-v2-squashfs-sysupgrade.bin
+output=ZBT-Z8102AX-V2-GO2026-08-12-upgrade.bin
+build_date=2026-08-12

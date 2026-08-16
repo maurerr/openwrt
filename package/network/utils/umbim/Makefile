@@ -38,7 +38,6 @@ TARGET_CFLAGS += \
 define Package/umbim/install
 	$(INSTALL_DIR) $(1)/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/umbim $(1)/sbin/
-	$(CP) ./files/* $(1)/
 endef
 
 $(eval $(call BuildPackage,umbim))

@@ -1,0 +1,114 @@
+<%+header%>
+
+<script type="text/javascript" src="<%=resource%>/xhr.js"></script>
+<script type="text/javascript">//<![CDATA[
+
+	XHR.get('<%=luci.dispatcher.build_url("admin", "system", "getfan")%>',
+		null,
+		function(x, rv)
+		{
+			document.getElementById("onat").value = rv.onat;
+			document.getElementById("offat").value = rv.offat;
+			document.getElementById("ctemp").innerHTML = rv.temp;
+			document.getElementById("cfan").innerHTML = rv.state;
+		}
+	); 
+	
+	XHR.poll(15, '<%=luci.dispatcher.build_url("admin", "system", "getfanstat")%>',
+		null,
+		function(x, rv)
+		{
+			document.getElementById("ctemp").innerHTML = rv.temp;
+			document.getElementById("cfan").innerHTML = rv.state;
+		}
+	); 
+	
+	function settemp() {
+		ona = document.getElementById("onat").value;
+		ofa = document.getElementById("offat").value;
+		if ( ona == "" || ofa == "" )
+		{
+			alert("<%:Missing Range Value%>!!");
+			return false;
+		}
+		onav = parseInt(ona);
+		onfv = parseInt(ofa);
+		if ( onfv >= onav )
+		{
+			alert("<%:Turn off temp must be less than turn on value%>");
+			return false;
+		}
+		s = ona + "," + ofa;
+		XHR.get('<%=luci.dispatcher.build_url("admin", "system", "setfan")%>',
+			{ set: s },
+			function(x, rv)
+			{
+				alert("<%:Range Values Changed%>");
+			}
+		);
+
+	}
+	
+//]]></script>
+
+<form method="post" action="<%=REQUEST_URI%>">
+<head>
+	<link rel="stylesheet" href="<%=resource%>/buttons/buttons.css">
+</head>
+<div class="cbi-map" id="cbi-hot">
+<h2><a id="content" name="content"><%:Fan Control%></a></h2>
+<div class="cbi-map-descr"><%:Temperature control of the fan%></div>
+
+<fieldset class="cbi-section" id="cbi-modi">
+	<legend><%:Temperature Range%></legend>
+	<table width="550"  border="0">
+		<tr>
+			<td width="17%" style="font-size: 20px" align="right"><%:Turn on at%></td>
+			<td width="2%"></td>
+			<td width="3%"><input type="text" id="onat" class="cbi-input-text" style="width: 75px;font-size: 20px;text-align: center;" ></input></td>
+			<td width="79%" style="font-size: 20px" align="left">&deg;C</td>
+		</tr>
+		<tr>
+			<td style="font-size: 20px" align="right"><%:Turn off at%></td>
+			<td></td>
+			<td><input type="text" id="offat" class="cbi-input-text" style="width: 75px;font-size: 20px;text-align: center;" ></input></td>
+			<td style="font-size: 20px" align="left">&deg;C</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>
+				<div style="color:black;width:330px" id="sendcust" class="button-33" role="button" onclick="return settemp()"><%:Set Temperature Range%></div>
+			</td>
+			
+		</tr>
+	</table>
+</fieldset>
+
+<fieldset class="cbi-section" id="cbi-modi">
+	<legend><%:Status%></legend>
+	<table width="550"  border="0">
+		<tr>
+			<td width="17%" style="font-size: 20px" align="right"><%:Current Temperature%></td>
+			<td width="2%"></td>
+			<td width="3%" id="ctemp" style="font-size: 20px" align="center"></td>
+			<td width="79%" style="font-size: 20px" align="left">&deg;C</td>
+		</tr>
+		<tr>
+			<td style="font-size: 20px" align="right"><%:Fan State%></td>
+			<td></td>
+			<td id="cfan" style="font-size: 20px" align="center"></td>
+			<td style="font-size: 20px" align="left"></td>
+		</tr>
+	</table>
+</fieldset>
+
+</div>
+</form>
+<%+footer%>

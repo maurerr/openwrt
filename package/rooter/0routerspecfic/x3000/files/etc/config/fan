@@ -1,0 +1,7 @@
+
+config fan 'fan'
+	option temp '0'
+	option onat '60'
+	option offat '55'
+	option state 'On'
+

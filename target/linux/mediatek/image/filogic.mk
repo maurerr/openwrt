@@ -3438,7 +3438,7 @@ define Device/zbtlink_zbt-z8102ax
   DEVICE_MODEL := ZBT-Z8102AX
   DEVICE_DTS := mt7981b-zbtlink-zbt-z8102ax
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 kmod-usb-net-qmi-wwan kmod-usb-serial-option
+  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 kmod-usb-net-qmi-wwan kmod-usb-serial-option ext-rooter-lite rqmi rmbim pbr luci-app-pbr luci-app-rootervpn ext-multimodem ext-simplegps build-admin
   KERNEL_IN_UBI := 1
   UBINIZE_OPTS := -E 5
   BLOCKSIZE := 128k
@@ -3455,7 +3455,7 @@ define Device/zbtlink_zbt-z8102ax-v2
   DEVICE_MODEL := ZBT-Z8102AX-V2
   DEVICE_DTS := mt7981b-zbtlink-zbt-z8102ax-v2
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 kmod-usb-net-qmi-wwan kmod-usb-serial-option
+  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 kmod-usb-net-qmi-wwan kmod-usb-serial-option ext-rooter-lite rqmi rmbim pbr luci-app-pbr luci-app-rootervpn ext-multimodem ext-simplegps build-admin
   KERNEL_IN_UBI := 1
   UBINIZE_OPTS := -E 5
   BLOCKSIZE := 128k
@@ -3511,7 +3511,7 @@ define Device/zbtlink_zbt-z8106ax-s
   SUPPORTED_DEVICES += zbtlink,z8106ax-2sim
   DEVICE_DTS := mt7981b-zbtlink-zbt-z8106ax-s
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 kmod-usb-net-qmi-wwan kmod-usb-serial-option
+  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 kmod-usb-net-qmi-wwan kmod-usb-serial-option ext-rooter-lite rqmi rmbim pbr luci-app-pbr luci-app-rootervpn ext-multimodem ext-simplegps build-admin
   KERNEL_IN_UBI := 1
   UBINIZE_OPTS := -E 5
   BLOCKSIZE := 128k
@@ -3531,7 +3531,7 @@ define Device/zbtlink_zbt-z8106ax-t
   SUPPORTED_DEVICES += zbtlink,z8106ax-2sim
   DEVICE_DTS := mt7981b-zbtlink-zbt-z8106ax-t
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 kmod-usb-net-qmi-wwan kmod-usb-serial-option
+  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 kmod-usb-net-qmi-wwan kmod-usb-serial-option ext-rooter-lite rqmi rmbim pbr luci-app-pbr luci-app-rootervpn ext-multimodem ext-simplegps build-admin
   KERNEL_IN_UBI := 1
   UBINIZE_OPTS := -E 5
   BLOCKSIZE := 128k

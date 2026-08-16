@@ -1,0 +1,215 @@
+#!/bin/sh
+# ROOter model-driven build wrapper for OpenWrt 25.12.x.
+# Reproduces the original Z8102V2 ROOter package selection:
+#   normal image: ext-rooter-lite
+#   MWAN3 image:  ext-rooter16 (which depends on ext-rooter-lite)
+# The old generated .config is NOT copied into 25.12.x.
+
+set -eu
+
+ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+MODEL_DB="$ROOT/scripts/rooter-models/routerz8.json"
+CONFIG_DIR="$ROOT/.rooter/configs"
+JOBS="${ROOTER_JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)}"
+DATE="$(date +%Y-%m-%d)"
+STAMP="GO$DATE"
+
+die() { echo "ERROR: $*" >&2; exit 1; }
+usage() {
+    cat >&2 <<EOF
+Usage:
+  $0 Z8102V2
+  $0 Z8102V2-mwan3
+  $0 -e Z8102V2
+  $0 -eb Z8102V2
+  $0 -b Z8102V2
+  $0 -e Z8102V2-mwan3
+  $0 -eb Z8102V2-mwan3
+  $0 -b Z8102V2-mwan3
+EOF
+    exit 2
+}
+
+[ -f "$MODEL_DB" ] || die "missing model database: $MODEL_DB"
+command -v python3 >/dev/null 2>&1 || die "python3 is required on the build host"
+
+json_get() {
+    python3 - "$MODEL_DB" "$1" "$2" <<'PY'
+import json, sys
+db=json.load(open(sys.argv[1]))
+model=sys.argv[2].upper()
+key=sys.argv[3]
+try:
+    v=db["models"][model][key]
+except KeyError:
+    sys.exit(1)
+if isinstance(v, list):
+    for x in v: print(x)
+else:
+    print(v)
+PY
+}
+
+json_root() {
+    python3 - "$MODEL_DB" "$1" <<'PY'
+import json, sys
+db=json.load(open(sys.argv[1]))
+print(db["openwrt"][sys.argv[2]])
+PY
+}
+
+package_exists() {
+    pkg="$1"
+    grep -RqsE "^define Package/${pkg}([[:space:]]|$)" \
+        "$ROOT/package" "$ROOT/package/feeds" 2>/dev/null
+}
+
+select_model() {
+    requested="$(printf '%s' "$1" | tr '[:lower:]' '[:upper:]')"
+    MWAN3=0
+    case "$requested" in
+        Z8102V2-MWAN3)
+            MODEL="Z8102V2"
+            MWAN3=1
+            ;;
+        Z8102V2)
+            MODEL="Z8102V2"
+            ;;
+        *)
+            die "unknown model: $1"
+            ;;
+    esac
+
+    PROFILE="$(json_get "$MODEL" profile)"
+    TARGET="$(json_root target)"
+    SUBTARGET="$(json_root subtarget)"
+    CONFIG_NAME="$(json_get "$MODEL" config)"
+    OUTPUT_NAME="$(json_get "$MODEL" output)"
+    IMAGE="$(json_get "$MODEL" image)"
+}
+
+enable_pkg() {
+    pkg="$1"
+    if package_exists "$pkg"; then
+        echo "CONFIG_PACKAGE_${pkg}=y"
+    fi
+}
+
+prepare_target() {
+    echo "==> Target: $TARGET/$SUBTARGET"
+    echo "==> Profile: $PROFILE"
+    echo "==> ROOter model: $MODEL"
+    if [ "$MWAN3" -eq 1 ]; then
+        echo "==> Variant: MWAN3 (ext-rooter16)"
+    else
+        echo "==> Variant: standard (ext-rooter-lite)"
+    fi
+
+    # Start from OpenWrt 25.12 target defaults, never from the legacy 24.10
+    # generated .config_z8102v2.
+    make defconfig >/dev/null
+
+    {
+        echo "CONFIG_TARGET_${TARGET}=y"
+        echo "CONFIG_TARGET_${TARGET}_${SUBTARGET}=y"
+        echo "CONFIG_TARGET_${TARGET}_${SUBTARGET}_DEVICE_${PROFILE}=y"
+        if [ "$MWAN3" -eq 1 ]; then
+            enable_pkg "$(json_get "$MODEL" mwan3_package)"
+        else
+            enable_pkg "$(json_get "$MODEL" rooter_package)"
+        fi
+        for pkg in $(json_get "$MODEL" exact_legacy_closure); do
+            enable_pkg "$pkg" || true
+        done
+        for pkg in $(json_get "$MODEL" exact_ext_rooter_basic_closure); do
+            enable_pkg "$pkg" || true
+        done
+    } >> .config
+
+    make defconfig
+}
+
+build_model() {
+    select_model "$1"
+    prepare_target
+
+    mkdir -p "$ROOT/images"
+    echo "==> Building OpenWrt 25.12 / $PROFILE"
+
+    make -j"$JOBS" V=s
+
+    src="$ROOT/bin/targets/$TARGET/$SUBTARGET/openwrt-${TARGET}-${SUBTARGET}-$IMAGE"
+    [ -f "$src" ] || src="$ROOT/bin/targets/$TARGET/$SUBTARGET/$IMAGE"
+    [ -f "$src" ] || die "expected image not found: $src"
+
+    suffix=""
+    [ "$MWAN3" -eq 1 ] && suffix="-MWAN3"
+    dst="$ROOT/images/${OUTPUT_NAME}${suffix}-${STAMP}-upgrade.bin"
+    cp -f "$src" "$dst"
+
+    cat > "$ROOT/images/${OUTPUT_NAME}${suffix}-${STAMP}.manifest" <<EOF
+model=$MODEL
+variant=$([ "$MWAN3" -eq 1 ] && echo MWAN3 || echo standard)
+details=$(json_get "$MODEL" details)
+target=$TARGET
+subtarget=$SUBTARGET
+profile=$PROFILE
+rooter_package=$([ "$MWAN3" -eq 1 ] && json_get "$MODEL" mwan3_package || json_get "$MODEL" rooter_package)
+openwrt_commit=$(git rev-parse HEAD 2>/dev/null || echo unknown)
+image=$IMAGE
+output=$(basename "$dst")
+build_date=$DATE
+EOF
+    echo "==> Image: $dst"
+}
+
+edit_config() {
+    select_model "$1"
+    mkdir -p "$CONFIG_DIR"
+    name="${2:-$CONFIG_NAME}"
+    cfg="$CONFIG_DIR/${name}.config"
+    if [ ! -f "$cfg" ]; then
+        prepare_target
+        cp .config "$cfg"
+    else
+        cp "$cfg" .config
+    fi
+    make menuconfig
+    cp .config "$cfg"
+    echo "Saved: $cfg"
+}
+
+build_saved() {
+    select_model "$1"
+    name="${2:-$CONFIG_NAME}"
+    cfg="$CONFIG_DIR/${name}.config"
+    [ -f "$cfg" ] || die "saved config not found: $cfg (run -e first)"
+    cp "$cfg" .config
+    make defconfig
+    build_model "$1"
+}
+
+[ $# -ge 1 ] || usage
+cd "$ROOT"
+
+case "$1" in
+    -e)
+        [ $# -ge 2 ] || usage
+        edit_config "$2" "${3:-}"
+        ;;
+    -eb)
+        [ $# -ge 2 ] || usage
+        edit_config "$2" "${3:-}"
+        build_saved "$2" "${3:-}"
+        ;;
+    -b)
+        [ $# -ge 2 ] || usage
+        build_saved "$2" "${3:-}"
+        ;;
+    Z8102V2|Z8102V2-mwan3)
+        build_model "$1"
+        ;;
+    *)
+        usage
+        ;;
+esac

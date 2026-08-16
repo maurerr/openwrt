@@ -1,0 +1,214 @@
+/*
+	CSS for ROOter splash pages 
+	Copyright Francois Dechery
+	https://github.com/soif
+*/
+
+/*modified_and_labeled_by__CSGO:Alpha__Dec_2022*/
+
+:root {
+	--background: #333;
+/* Header */	
+	--head-start: #999999;
+	--head-end: #000;
+	--title-color: #03d1ff;
+	--title-font: "Cooper Black", Rockwell, Georgia, "Times New Roman", Times, serif;
+/* Login button */	
+	--login-text-color: #03d1ff;
+	--login-background: #5d5b5b;
+	--login-focus: #7d7b7b;
+	--login-font: Rockwell, Georgia, "Times New Roman", Times, serif;
+/* section titles */	
+	--section-title-color: #03d1ff;
+	--section-title-font: Rockwell, Georgia, "Times New Roman", Times, serif;
+/* cell	title */
+	--cell-title-color: #03d1ff;
+	--cell-start: #5C5C5C;
+	--cell-end: #000;
+	--cell-title-font: "Cooper Black", Rockwell, Georgia, "Times New Roman", Times, serif;
+/* cell data */	
+	--cell-background: #AFAFAF;
+	--cell-text-color: #555;
+	--cell-font: "Cooper Black", Rockwell, Georgia, "Times New Roman", Times, serif;
+/* colors */	
+	--green: #0F0;
+	--yellow: #EF0;
+	--orange: #F80;
+	--darkorange: #FF4100;
+	--red: #F00;
+	--black: #000;
+}
+
+/*Background*/
+.rooterSplash{
+	padding: 0;
+	background: var(--background);
+	width: 100vw;
+}
+/* header gradiant */
+.rooterPageHead{
+	padding: 20px 5px;
+	background: linear-gradient(to bottom, var(--head-start) 0%,var(--head-end) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8c8cff', endColorstr='#5555ff',GradientType=0 );
+	border-bottom: 1px solid rgba(0,0,0,0.7);
+
+}
+/* Header Title*/
+.rooterHeadTitle{
+	text-decoration: underline;
+	color: var(--title-color);
+	text-align: center;
+	font-family: var(--title-font);
+	font-size: 72px;
+	line-height: 120%;
+	text-shadow: -1px -1px 2px rgba(0,0,0,0.5);
+}
+/*Login Button */
+.rooterItem{
+	overflow: hidden;
+	border: 0px solid #000;
+	border-color: #00 #DDD #DDD #00;
+	margin-bottom: 5px;
+	border-radius: 30px;
+	background-color: var(--login-background);
+	margin: auto;
+	width: 300px;
+}
+/*Login button Hover*/
+.rooterItem:hover{
+	background-color: var(--login-focus);
+	border-color: #AAA;
+}
+/* Login Text*/
+.rooterItemTitle{
+	float: left;
+	position: relative;
+	right: -15%;
+	font-size: 2em;
+	font-weight: bold;
+	padding-right: 10px;
+	color: var(--login-text-color);
+	line-height: 2em;
+	margin-right: 8px;
+	vertical-align: middle;
+	font-family: var(--login-font);
+}
+/* Section Titles */
+.rooterPageContent{
+	border-top: 1px solid rgb(0 0 0 / 53%);
+	border-bottom: 1px solid rgb(0 0 0 / 53%);
+	padding: 0px 0px;
+	max-width: fit-content;
+	margin: auto;
+	color: var(--section-title-color);
+	font-size: 21px;
+	text-align: center;
+	font-family: var(--section-title-font);
+	margin-left: auto;
+	margin-right: auto;
+}
+/*Cells Title gradiant and text*/
+.msTitle{
+	border-radius: 2px 2px 0 0;
+	padding: 5px 5px ;
+	color: var(--cell-title-color);
+	font-size: 17px;
+	font-weight: bold;
+	background: linear-gradient(to bottom, var(--cell-start) 0%,var(--cell-end) 100%);/*Cell BG Color*/
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#636363', endColorstr='#484848',GradientType=0 );
+	font-family: var(--cell-title-font);
+}
+/* Padding under section title */
+.msCell{
+	border-radius: 6px;
+	display: inline-block;
+	margin-top: 10px;
+	float:left;
+	position: relative;
+	right: -5%;
+	border: 1px solid #333;
+	padding-bottom: 5px;
+	background: var(--cell-background);
+	text-align: center;
+	margin-left: 12px;
+	font-size: 18px;
+
+}
+/* Cell Signal data background and text */
+.tmsCell{
+	border-radius: 6px;
+	border: 1px solid #333;
+	padding-bottom: 5px;
+	background: var(--cell-background);
+	text-align: center;
+	font-size: 30px;
+	font-family: var(--cell-font);
+}
+/* Cell Network/Device data background and text */
+.ttmsCell{
+	border-radius: 6px;
+	border: 1px solid #333;
+	padding-bottom: 5px;
+	background: var(--cell-background);
+	text-align: center;
+	font-size: 18px;
+	font-family: var(--cell-font);
+}
+/* center tables */
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*Levels_Name_Text_Strength_RSSI_RSRP*/
+.msDesc{
+	color: var(--cell-text-color);
+	font-size: 18px;
+	font-weight: bold;
+	padding: 5px;
+	margin-left: 10px;
+	margin-top: 5px;
+}
+/*Erase Dot*/
+.msDot{
+	font-size: 0px;
+}
+/*Levels_Text_Except_Strenghth_RSSI_RSRP*/
+.msText{
+	color: var(--cell-text-color);
+	padding: 3px; 
+	font-weight: bold;
+	text-align: center;
+}
+
+/*Bandwith*/
+.rooterPageContentBW{
+	border-top: 0px solid rgb(0 0 0 / 53%);
+	border-bottom: 0px solid rgb(0 0 0 / 53%);
+	padding: 10px 0px;
+	width: 590px;
+	margin-left: -25px;
+}
+.bwText{
+	Font-size: 20px;
+}
+
+/*Splash_Status_Levels*/
+.level_1{
+	color: var(--green); /*Green*/
+}
+.level_2{
+	color: var(--yellow); /*yellow*/
+} 
+.level_3{
+	color: var(--orange); /*orange*/
+}
+.level_4{
+	color: var(--darkorange); /*dark_orange*/
+}
+.level_5{
+	color: var(--red); /*red*/
+} 
+.level_6{
+	color: var(--black); /*black*/
+}
