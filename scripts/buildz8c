@@ -1,3 +1,15 @@
 #!/bin/sh
 # Compatibility wrapper for the legacy ROOter buildz8c entry point.
-exec "$(CDPATH= cd -- "$(dirname "$0")" && pwd)/rooter-build" "$@"
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
+if [ -f "$SCRIPT_DIR/rooter-build" ]; then
+    exec "$SCRIPT_DIR/rooter-build" "$@"
+elif [ -f "$SCRIPT_DIR/scripts/rooter-build" ]; then
+    exec "$SCRIPT_DIR/scripts/rooter-build" "$@"
+else
+    TARGET="$(readlink -f "$0" 2>/dev/null || true)"
+    if [ -n "$TARGET" ] && [ -f "$(dirname "$TARGET")/rooter-build" ]; then
+        exec "$(dirname "$TARGET")/rooter-build" "$@"
+    fi
+    echo "ERROR: could not find rooter-build script" >&2
+    exit 1
+fi
