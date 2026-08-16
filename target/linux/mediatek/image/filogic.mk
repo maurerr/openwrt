@@ -3665,3 +3665,73 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 endif
 endef
 TARGET_DEVICES += zyxel_wx5600-t0-ubootmod
+
+# ROOter custom devices ported from 24.10 tree (not yet upstream in 25.12)
+
+define Device/huasifei_ws1698
+  DEVICE_VENDOR := Huasifei
+  DEVICE_MODEL := WS1698AX
+  DEVICE_DTS := mt7981b-huasifei_ws1698ax
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3
+  UBINIZE_OPTS := -E 5
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  IMAGE_SIZE := 65536k
+ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
+  ARTIFACTS := initramfs-factory.ubi
+  ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-kernel.bin | ubinize-kernel
+endif
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+endef
+TARGET_DEVICES += huasifei_ws1698
+
+define Device/huasifei_ws1698-256M
+  DEVICE_VENDOR := Huasifei
+  DEVICE_MODEL := WS1698AX-256M
+  DEVICE_DTS := mt7981b-huasifei_ws1698ax-256M
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3
+  UBINIZE_OPTS := -E 5
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  IMAGE_SIZE := 131072k
+ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
+  ARTIFACTS := initramfs-factory.ubi
+  ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-kernel.bin | ubinize-kernel
+endif
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+endef
+TARGET_DEVICES += huasifei_ws1698-256M
+
+define Device/z8109ax-common
+  DEVICE_VENDOR := ZBT
+  DEVICE_MODEL := Z8109AX
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 kmod-usb-net-qmi-wwan kmod-usb-serial-option
+  KERNEL_IN_UBI := 1
+  UBINIZE_OPTS := -E 5
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
+  ARTIFACTS := initramfs-factory.ubi
+  ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-kernel.bin | ubinize-kernel
+endif
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+endef
+
+define Device/zbt_z8109ax-128m
+  $(call Device/z8109ax-common)
+  DEVICE_VARIANT := 128 NAND
+  DEVICE_DTS := mt7981b-zbt-z8109ax-128m
+  IMAGE_SIZE := 131072k
+endef
+TARGET_DEVICES += zbt_z8109ax-128m
+
+define Device/zbt_z8109ax-512m
+  $(call Device/z8109ax-common)
+  DEVICE_VARIANT := 512 NAND
+  DEVICE_DTS := mt7981b-zbt-z8109ax-512m
+  IMAGE_SIZE := 524288k
+endef
+TARGET_DEVICES += zbt_z8109ax-512m

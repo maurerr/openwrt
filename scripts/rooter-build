@@ -1,30 +1,41 @@
 #!/bin/sh
 # ROOter model-driven build wrapper for OpenWrt 25.12.x.
-# Reproduces the original Z8102 / Z8102V2 ROOter package selection:
-#   normal image: ext-rooter-lite
-#   MWAN3 image:  ext-rooter16 (which depends on ext-rooter-lite)
-# The old generated .config is NOT copied into 25.12.x.
+# Supports ALL devices from the 24.10 build system via scripts/rooter-models/router-all.json
+# Usage:
+#   ./build <MODEL>              # standard image
+#   ./build <MODEL>-mwan3        # MWAN3 image
+#   ./build -e  <MODEL>          # menuconfig then save
+#   ./build -eb <MODEL>          # menuconfig then build
+#   ./build -b  <MODEL>          # build from saved config
+#   ./build LIST                 # list all models
+#   ./buildz8  <MODEL>           # convenience alias
+#   ./buildz8c <MODEL>           # convenience alias
 
 set -eu
 
 ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
-MODEL_DB="$ROOT/scripts/rooter-models/routerz8.json"
+MODEL_DB="${MODEL_DB:-$ROOT/scripts/rooter-models/router-all.json}"
 CONFIG_DIR="$ROOT/.rooter/configs"
 JOBS="${ROOTER_JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)}"
 DATE="$(date +%Y-%m-%d)"
 STAMP="GO$DATE"
 
-die() { echo "ERROR: $*" >&2; exit 1; }
+die()   { echo "ERROR: $*" >&2; exit 1; }
+warn()  { echo "WARN:  $*" >&2; }
 usage() {
     cat >&2 <<EOF
+ROOter 25.12 build wrapper
+
 Usage:
-  $0 Z8102
-  $0 Z8102-mwan3
-  $0 Z8102V2
-  $0 Z8102V2-mwan3
-  $0 -e <model>
-  $0 -eb <model>
-  $0 -b <model>
+  $0 <MODEL>              build standard image
+  $0 <MODEL>-mwan3        build MWAN3 image
+  $0 -e  <MODEL>          edit config (menuconfig) then save
+  $0 -eb <MODEL>          edit config then build
+  $0 -b  <MODEL>          build from previously saved config
+  $0 LIST                 list all available models
+
+Models are defined in: scripts/rooter-models/router-all.json
+Unavailable models (missing DTS in 25.12) are in the _UNAVAILABLE_IN_25 section.
 EOF
     exit 2
 }
@@ -32,190 +43,236 @@ EOF
 [ -f "$MODEL_DB" ] || die "missing model database: $MODEL_DB"
 command -v python3 >/dev/null 2>&1 || die "python3 is required on the build host"
 
-json_get() {
+#--------------------------------------------------------------------
+# JSON helpers
+#--------------------------------------------------------------------
+_json_model() {
     python3 - "$MODEL_DB" "$1" "$2" <<'PY'
 import json, sys
-db=json.load(open(sys.argv[1]))
-model=sys.argv[2].upper()
-key=sys.argv[3]
-try:
-    v=db["models"][model][key]
-except KeyError:
+db = json.load(open(sys.argv[1]))
+models = db.get("models", db)
+model = sys.argv[2].upper()
+key = sys.argv[3]
+m = models.get(model)
+if not m:
     sys.exit(1)
-if isinstance(v, list):
-    for x in v: print(x)
-else:
-    print(v)
+v = m.get(key)
+if v is None:
+    sys.exit(1)
+print(v)
 PY
 }
 
-json_root() {
-    python3 - "$MODEL_DB" "$1" <<'PY'
+_json_list() {
+    python3 - "$MODEL_DB" <<'PY'
 import json, sys
-db=json.load(open(sys.argv[1]))
-print(db["openwrt"][sys.argv[2]])
+db = json.load(open(sys.argv[1]))
+models = db.get("models", db)
+for k, v in sorted(models.items()):
+    if k.startswith("_"):
+        continue
+    details = v.get("details", "")
+    target  = v.get("target", "?")
+    sub     = v.get("subtarget", "?")
+    print(f"  {k:<20}  {target}/{sub:<22}  {details}")
 PY
 }
+
+_unavailable_list() {
+    python3 - "$MODEL_DB" <<'PY'
+import json, sys
+db = json.load(open(sys.argv[1]))
+models = db.get("models", db)
+u = models.get("_UNAVAILABLE_IN_25", {})
+for k, v in sorted(u.items()):
+    if k.startswith("_"):
+        continue
+    print(f"  {k:<20}  {v.get('details','')}  (port DTS first: {v.get('dts','')})")
+PY
+}
+
+model_field() { _json_model "$MODEL_DB" "$1" "$2"; }
 
 package_exists() {
-    pkg="$1"
-    grep -RqsE "^define Package/${pkg}([[:space:]]|$)" \
-        "$ROOT/package" "$ROOT/package/feeds" 2>/dev/null
+    grep -RqsE "^define Package/${1}([[:space:]]|$)" \
+        "$ROOT/package" "$ROOT/feeds" 2>/dev/null
 }
 
+#--------------------------------------------------------------------
+# Model selection
+#--------------------------------------------------------------------
 select_model() {
-    requested="$(printf '%s' "$1" | tr '[:lower:]' '[:upper:]')"
+    RAW="$(printf '%s' "$1" | tr '[:lower:]' '[:upper:]')"
     MWAN3=0
-    case "$requested" in
-        Z8102V2-MWAN3)
-            MODEL="Z8102V2"
+    case "$RAW" in
+        *-MWAN3)
+            MODEL="${RAW%-MWAN3}"
             MWAN3=1
-            ;;
-        Z8102V2)
-            MODEL="Z8102V2"
-            ;;
-        Z8102-MWAN3)
-            MODEL="Z8102"
-            MWAN3=1
-            ;;
-        Z8102)
-            MODEL="Z8102"
             ;;
         *)
-            die "unknown model: $1"
+            MODEL="$RAW"
             ;;
     esac
 
-    PROFILE="$(json_get "$MODEL" profile)"
-    TARGET="$(json_root target)"
-    SUBTARGET="$(json_root subtarget)"
-    CONFIG_NAME="$(json_get "$MODEL" config)"
-    OUTPUT_NAME="$(json_get "$MODEL" output)"
-    IMAGE="$(json_get "$MODEL" image)"
-}
+    # Validate model exists
+    python3 - "$MODEL_DB" "$MODEL" <<'PY' || die "Unknown model: $MODEL"
+import json, sys
+db = json.load(open(sys.argv[1]))
+models = db.get("models", db)
+m = sys.argv[2]
+if m not in models or m.startswith("_"):
+    sys.exit(1)
+PY
 
-enable_pkg() {
-    pkg="$1"
-    if package_exists "$pkg"; then
-        echo "CONFIG_PACKAGE_${pkg}=y"
-    fi
-}
-
-prepare_target() {
-    echo "==> Target: $TARGET/$SUBTARGET"
-    echo "==> Profile: $PROFILE"
-    echo "==> ROOter model: $MODEL"
+    TARGET="$(model_field "$MODEL" target)"
+    SUBTARGET="$(model_field "$MODEL" subtarget)"
+    PROFILE="$(model_field "$MODEL" profile)"
+    CONFIG_NAME="$(model_field "$MODEL" config)"
+    OUTPUT_NAME="$(model_field "$MODEL" output)"
+    IMAGE_SYSUPGRADE="$(model_field "$MODEL" image_sysupgrade)"
+    BUILD_TYPE="$(model_field "$MODEL" build_type 2>/dev/null || true)"
     if [ "$MWAN3" -eq 1 ]; then
-        echo "==> Variant: MWAN3 (ext-rooter16)"
+        ROOTER_PKG="$(model_field "$MODEL" mwan3_package)"
     else
-        echo "==> Variant: standard (ext-rooter-lite)"
+        ROOTER_PKG="$(model_field "$MODEL" rooter_package)"
     fi
+}
 
-    # Start from OpenWrt 25.12 target defaults, never from the legacy 24.10
-    # generated .config_z8102v2.
-    make defconfig >/dev/null
+#--------------------------------------------------------------------
+# .config preparation
+#--------------------------------------------------------------------
+prepare_config() {
+    echo "==> Target  : $TARGET/$SUBTARGET"
+    echo "==> Profile : $PROFILE"
+    echo "==> Model   : $MODEL  variant=$([ "$MWAN3" -eq 1 ] && echo MWAN3 || echo standard)"
+    echo "==> Package : $ROOTER_PKG"
+
+    make defconfig >/dev/null 2>&1
 
     {
         echo "CONFIG_TARGET_${TARGET}=y"
         echo "CONFIG_TARGET_${TARGET}_${SUBTARGET}=y"
         echo "CONFIG_TARGET_${TARGET}_${SUBTARGET}_DEVICE_${PROFILE}=y"
-        if [ "$MWAN3" -eq 1 ]; then
-            enable_pkg "$(json_get "$MODEL" mwan3_package)"
+        if package_exists "$ROOTER_PKG"; then
+            echo "CONFIG_PACKAGE_${ROOTER_PKG}=y"
         else
-            enable_pkg "$(json_get "$MODEL" rooter_package)"
+            warn "package $ROOTER_PKG not found in feeds – skipping"
         fi
-        for pkg in $(json_get "$MODEL" exact_legacy_closure); do
-            enable_pkg "$pkg" || true
-        done
-        for pkg in $(json_get "$MODEL" exact_ext_rooter_basic_closure); do
-            enable_pkg "$pkg" || true
-        done
     } >> .config
 
-    make defconfig
+    make defconfig >/dev/null 2>&1
 }
 
-build_model() {
-    select_model "$1"
-    prepare_target
-
-    mkdir -p "$ROOT/images"
-    echo "==> Building OpenWrt 25.12 / $PROFILE"
-
+#--------------------------------------------------------------------
+# Build and copy image
+#--------------------------------------------------------------------
+do_build() {
+    echo "==> Building ($JOBS jobs)..."
     make -j"$JOBS" V=s
 
-    src="$ROOT/bin/targets/$TARGET/$SUBTARGET/openwrt-${TARGET}-${SUBTARGET}-$IMAGE"
-    [ -f "$src" ] || src="$ROOT/bin/targets/$TARGET/$SUBTARGET/$IMAGE"
-    [ -f "$src" ] || die "expected image not found: $src"
-
+    mkdir -p "$ROOT/images"
     suffix=""
     [ "$MWAN3" -eq 1 ] && suffix="-MWAN3"
     dst="$ROOT/images/${OUTPUT_NAME}${suffix}-${STAMP}-upgrade.bin"
+
+    # Locate the sysupgrade image
+    src=""
+    for dir in \
+        "$ROOT/bin/targets/$TARGET/$SUBTARGET" \
+        "$ROOT/bin/targets/$TARGET/$SUBTARGET/"; do
+        candidate="$dir/$IMAGE_SYSUPGRADE"
+        if [ -f "$candidate" ]; then
+            src="$candidate"
+            break
+        fi
+    done
+    [ -n "$src" ] || die "Image not found: $IMAGE_SYSUPGRADE  (looked in bin/targets/$TARGET/$SUBTARGET/)"
+
     cp -f "$src" "$dst"
 
     cat > "$ROOT/images/${OUTPUT_NAME}${suffix}-${STAMP}.manifest" <<EOF
 model=$MODEL
 variant=$([ "$MWAN3" -eq 1 ] && echo MWAN3 || echo standard)
-details=$(json_get "$MODEL" details)
-target=$TARGET
-subtarget=$SUBTARGET
+details=$(model_field "$MODEL" details)
+target=$TARGET/$SUBTARGET
 profile=$PROFILE
-rooter_package=$([ "$MWAN3" -eq 1 ] && json_get "$MODEL" mwan3_package || json_get "$MODEL" rooter_package)
-openwrt_commit=$(git rev-parse HEAD 2>/dev/null || echo unknown)
-image=$IMAGE
+rooter_package=$ROOTER_PKG
+openwrt_commit=$(git -C "$ROOT" rev-parse HEAD 2>/dev/null || echo unknown)
+image=$IMAGE_SYSUPGRADE
 output=$(basename "$dst")
 build_date=$DATE
 EOF
     echo "==> Image: $dst"
 }
 
-edit_config() {
+#--------------------------------------------------------------------
+# High-level actions
+#--------------------------------------------------------------------
+action_build() {
     select_model "$1"
-    mkdir -p "$CONFIG_DIR"
+    cd "$ROOT"
+    prepare_config
+    do_build
+}
+
+action_edit() {
+    select_model "$1"
     name="${2:-$CONFIG_NAME}"
     cfg="$CONFIG_DIR/${name}.config"
-    if [ ! -f "$cfg" ]; then
-        prepare_target
-        cp .config "$cfg"
-    else
+    mkdir -p "$CONFIG_DIR"
+    cd "$ROOT"
+    if [ -f "$cfg" ]; then
         cp "$cfg" .config
+    else
+        prepare_config
     fi
     make menuconfig
     cp .config "$cfg"
-    echo "Saved: $cfg"
+    echo "==> Saved config: $cfg"
 }
 
-build_saved() {
+action_build_saved() {
     select_model "$1"
     name="${2:-$CONFIG_NAME}"
     cfg="$CONFIG_DIR/${name}.config"
-    [ -f "$cfg" ] || die "saved config not found: $cfg (run -e first)"
+    [ -f "$cfg" ] || die "No saved config for $MODEL at $cfg (run -e first)"
+    cd "$ROOT"
     cp "$cfg" .config
-    make defconfig
-    build_model "$1"
+    make defconfig >/dev/null 2>&1
+    do_build
 }
 
+action_list() {
+    echo "Available models:"
+    _json_list
+    echo ""
+    echo "Unavailable (DTS not yet in 25.12 – port DTS before building):"
+    _unavailable_list
+}
+
+#--------------------------------------------------------------------
+# Entry point
+#--------------------------------------------------------------------
 [ $# -ge 1 ] || usage
-cd "$ROOT"
 
 case "$1" in
+    LIST|list)
+        action_list
+        ;;
     -e)
         [ $# -ge 2 ] || usage
-        edit_config "$2" "${3:-}"
+        action_edit "$2" "${3:-}"
         ;;
     -eb)
         [ $# -ge 2 ] || usage
-        edit_config "$2" "${3:-}"
-        build_saved "$2" "${3:-}"
+        action_edit "$2" "${3:-}"
+        action_build_saved "$2" "${3:-}"
         ;;
     -b)
         [ $# -ge 2 ] || usage
-        build_saved "$2" "${3:-}"
-        ;;
-    Z8102|z8102|Z8102-mwan3|z8102-mwan3|Z8102-MWAN3|Z8102V2|z8102v2|Z8102V2-mwan3|z8102v2-mwan3|Z8102V2-MWAN3)
-        build_model "$1"
+        action_build_saved "$2" "${3:-}"
         ;;
     *)
-        usage
+        action_build "$1"
         ;;
 esac

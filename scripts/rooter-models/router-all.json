@@ -1,0 +1,554 @@
+{
+  "schema": 2,
+  "note": "Model database for ROOter 25.12.5 – all devices from 24.10 mapped to 25.12 profiles. Keys marked unavailable_in_25: device DTS/image not yet in upstream 25.12; you must port the DTS and image rule manually before building.",
+  "models": {
+
+    "Z8102": {
+      "details": "ZBT Z8102AX V1",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "zbtlink_zbt-z8102ax",
+      "config": "z8102", "output": "ZBT-Z8102AX-V1",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-zbtlink_zbt-z8102ax-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mediatek-filogic-zbtlink_zbt-z8102ax-squashfs-factory.bin"
+    },
+
+    "Z8102V2": {
+      "details": "ZBT Z8102AX V2",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "zbtlink_zbt-z8102ax-v2",
+      "config": "z8102v2", "output": "ZBT-Z8102AX-V2",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-zbtlink_zbt-z8102ax-v2-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mediatek-filogic-zbtlink_zbt-z8102ax-v2-squashfs-factory.bin"
+    },
+
+    "MT2500": {
+      "details": "GL.iNet GL-MT2500",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "glinet_gl-mt2500",
+      "config": "mt2500", "output": "GL-iNet-MT2500",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-glinet_gl-mt2500-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mediatek-filogic-glinet_gl-mt2500-squashfs-factory.bin"
+    },
+
+    "MT2500V2": {
+      "details": "GL.iNet GL-MT2500 (Airoha variant)",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "glinet_gl-mt2500-airoha",
+      "config": "mt2500v2", "output": "GL-iNet-MT2500-Airoha",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-glinet_gl-mt2500-airoha-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mediatek-filogic-glinet_gl-mt2500-airoha-squashfs-factory.bin"
+    },
+
+    "MT3000": {
+      "details": "GL.iNet GL-MT3000",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "glinet_gl-mt3000",
+      "config": "mt3000", "output": "GL-iNet-MT3000",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-glinet_gl-mt3000-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mediatek-filogic-glinet_gl-mt3000-squashfs-factory.bin"
+    },
+
+    "MT6000": {
+      "details": "GL.iNet GL-MT6000",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "glinet_gl-mt6000",
+      "config": "mt6000", "output": "GL-iNet-MT6000",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-glinet_gl-mt6000-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mediatek-filogic-glinet_gl-mt6000-squashfs-factory.bin"
+    },
+
+    "X3000": {
+      "details": "GL.iNet GL-X3000",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "glinet_gl-x3000",
+      "config": "x3000", "output": "GL-iNet-X3000",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-glinet_gl-x3000-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mediatek-filogic-glinet_gl-x3000-squashfs-factory.bin"
+    },
+
+    "BPI3MINI": {
+      "details": "Banana Pi BPI-R3-Mini",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "bananapi_bpi-r3-mini",
+      "config": "bpi3mini", "output": "Banana-Pi-R3-Mini",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-bananapi_bpi-r3-mini-squashfs-sysupgrade.itb",
+      "image_factory":    "openwrt-mediatek-filogic-bananapi_bpi-r3-mini-snand-factory.bin"
+    },
+
+    "BPI4": {
+      "details": "Banana Pi BPI-R4",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "bananapi_bpi-r4",
+      "config": "bpi4", "output": "Banana-Pi-R4",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-bananapi_bpi-r4-squashfs-sysupgrade.itb",
+      "image_factory":    "openwrt-mediatek-filogic-bananapi_bpi-r4-snand-factory.bin"
+    },
+
+    "BPI4POE": {
+      "details": "Banana Pi BPI-R4-POE",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "bananapi_bpi-r4-poe",
+      "config": "bpi4poe", "output": "Banana-Pi-R4-POE",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-bananapi_bpi-r4-poe-squashfs-sysupgrade.itb",
+      "image_factory":    "openwrt-mediatek-filogic-bananapi_bpi-r4-poe-snand-factory.bin"
+    },
+
+    "RAX3000": {
+      "details": "CMCC RAX3000M",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "cmcc_rax3000m",
+      "config": "rax3000", "output": "CMCC-RAX3000M",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-cmcc_rax3000m-squashfs-sysupgrade.itb",
+      "image_factory":    null
+    },
+
+    "TR3000": {
+      "details": "Cudy TR3000",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "cudy_tr3000-v1",
+      "config": "tr3000", "output": "Cudy-TR3000",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-cudy_tr3000-v1-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mediatek-filogic-cudy_tr3000-v1-initramfs-kernel.bin"
+    },
+
+    "WH3000": {
+      "details": "Huasifei WH3000",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "huasifei_wh3000",
+      "config": "wh3000", "output": "Huasifei-WH3000",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-huasifei_wh3000-squashfs-sysupgrade.bin",
+      "image_factory":    null
+    },
+
+    "WH3000PRO": {
+      "details": "Huasifei WH3000-PRO (NAND)",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "huasifei_wh3000-pro-nand",
+      "config": "wh3000pro", "output": "Huasifei-WH3000-PRO",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-huasifei_wh3000-pro-nand-squashfs-sysupgrade.bin",
+      "image_factory":    null
+    },
+
+    "WR632": {
+      "details": "Comfast CF-WR632AX",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "comfast_cf-wr632ax",
+      "config": "wr632", "output": "Comfast-WR632AX",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-comfast_cf-wr632ax-squashfs-sysupgrade.bin",
+      "image_factory":    null
+    },
+
+    "WG1602-32": {
+      "details": "ZBT WG1602-v04 32M",
+      "target": "ramips", "subtarget": "mt7621",
+      "profile": "zbtlink_zbt-wg1602-v04-32m",
+      "config": "wg1602-32", "output": "ZBT-WG1602-32M",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ramips-mt7621-zbtlink_zbt-wg1602-v04-32m-squashfs-sysupgrade.bin",
+      "image_factory":    null
+    },
+
+    "AX1800": {
+      "details": "GL.iNet GL-AX1800",
+      "target": "qualcommax", "subtarget": "ipq60xx",
+      "profile": "glinet_gl-ax1800",
+      "config": "ax1800", "output": "GL-iNet-AX1800",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-qualcommax-ipq60xx-glinet_gl-ax1800-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-qualcommax-ipq60xx-glinet_gl-ax1800-squashfs-factory.ubi"
+    },
+
+    "AXT1800": {
+      "details": "GL.iNet GL-AXT1800",
+      "target": "qualcommax", "subtarget": "ipq60xx",
+      "profile": "glinet_gl-axt1800",
+      "config": "axt1800", "output": "GL-iNet-AXT1800",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-qualcommax-ipq60xx-glinet_gl-axt1800-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-qualcommax-ipq60xx-glinet_gl-axt1800-squashfs-factory.ubi"
+    },
+
+    "AW1000": {
+      "details": "Arcadyan AW1000",
+      "target": "qualcommax", "subtarget": "ipq807x",
+      "profile": "arcadyan_aw1000",
+      "config": "aw1000", "output": "Arcadyan-AW1000",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-qualcommax-ipq807x-arcadyan_aw1000-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-qualcommax-ipq807x-arcadyan_aw1000-squashfs-factory.ubi"
+    },
+
+    "Z800": {
+      "details": "ZBT Z800AX",
+      "target": "qualcommax", "subtarget": "ipq807x",
+      "profile": "zbtlink_zbt-z800ax",
+      "config": "z800", "output": "ZBT-Z800AX",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-qualcommax-ipq807x-zbtlink_zbt-z800ax-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-qualcommax-ipq807x-zbtlink_zbt-z800ax-squashfs-factory.ubi"
+    },
+
+    "A1300": {
+      "details": "GL.iNet GL-A1300",
+      "target": "ipq40xx", "subtarget": "generic",
+      "profile": "glinet_gl-a1300",
+      "config": "a1300", "output": "GL-iNet-A1300",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ipq40xx-generic-glinet_gl-a1300-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-ipq40xx-generic-glinet_gl-a1300-squashfs-factory.ubi"
+    },
+
+    "LBR20": {
+      "details": "Netgear LBR20",
+      "target": "ipq40xx", "subtarget": "generic",
+      "profile": "netgear_lbr20",
+      "config": "lbr20", "output": "Netgear-LBR20",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ipq40xx-generic-netgear_lbr20-squashfs-sysupgrade.bin",
+      "image_factory":    null
+    },
+
+    "MF286D": {
+      "details": "ZTE MF286D",
+      "target": "ipq40xx", "subtarget": "generic",
+      "profile": "zte_mf286d",
+      "config": "mf286d", "output": "ZTE-MF286D",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ipq40xx-generic-zte_mf286d-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-ipq40xx-generic-zte_mf286d-initramfs-zImage.itb"
+    },
+
+    "MF289F": {
+      "details": "ZTE MF289F",
+      "target": "ipq40xx", "subtarget": "generic",
+      "profile": "zte_mf289f",
+      "config": "mf289f", "output": "ZTE-MF289F",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ipq40xx-generic-zte_mf289f-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-ipq40xx-generic-zte_mf289f-initramfs-zImage.itb"
+    },
+
+    "WG156": {
+      "details": "ZBT WG156 (yyets le1)",
+      "target": "ipq40xx", "subtarget": "generic",
+      "profile": "yyets_le1",
+      "config": "wg156", "output": "ZBT-WG156",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ipq40xx-generic-yyets_le1-squashfs-sysupgrade.bin",
+      "image_factory":    null
+    },
+
+    "MF286": {
+      "details": "ZTE MF286",
+      "target": "ath79", "subtarget": "nand",
+      "profile": "zte_mf286",
+      "config": "mf286", "output": "ZTE-MF286",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ath79-nand-zte_mf286-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-ath79-nand-zte_mf286-initramfs-kernel.bin"
+    },
+
+    "WNDR4300": {
+      "details": "Netgear WNDR4300v1",
+      "target": "ath79", "subtarget": "nand",
+      "profile": "netgear_wndr4300",
+      "config": "wndr4300", "output": "Netgear-WNDR4300v1",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ath79-nand-netgear_wndr4300-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-ath79-nand-netgear_wndr4300-squashfs-factory.img"
+    },
+
+    "X1200": {
+      "details": "GL.iNet GL-X1200",
+      "target": "ath79", "subtarget": "nand",
+      "profile": "glinet_gl-x1200-nor-nand",
+      "config": "x1200", "output": "GL-iNet-X1200",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ath79-nand-glinet_gl-x1200-nor-nand-squashfs-sysupgrade.bin",
+      "image_factory":    null
+    },
+
+    "MIR3P": {
+      "details": "Xiaomi Mi Router 3 Pro",
+      "target": "ramips", "subtarget": "mt7621",
+      "profile": "xiaomi_mi-router-3-pro",
+      "config": "mir3p", "output": "Xiaomi-MIR3P",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ramips-mt7621-xiaomi_mi-router-3-pro-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-ramips-mt7621-xiaomi_mi-router-3-pro-squashfs-factory.bin"
+    },
+
+    "SBPRO": {
+      "details": "Beeline Smartbox Pro",
+      "target": "ramips", "subtarget": "mt7621",
+      "profile": "beeline_smartbox-pro",
+      "config": "sbpro", "output": "Beeline-Smartbox-Pro",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ramips-mt7621-beeline_smartbox-pro-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-ramips-mt7621-beeline_smartbox-pro-squashfs-factory.img"
+    },
+
+    "WRT1900AC": {
+      "details": "Linksys WRT1900AC V1",
+      "target": "mvebu", "subtarget": "cortexa9",
+      "profile": "linksys_wrt1900ac-v1",
+      "config": "wrt1900ac", "output": "Linksys-WRT1900AC-V1",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mvebu-cortexa9-linksys_wrt1900ac-v1-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mvebu-cortexa9-linksys_wrt1900ac-v1-squashfs-factory.img"
+    },
+
+    "WRT1900ACV2": {
+      "details": "Linksys WRT1900AC V2",
+      "target": "mvebu", "subtarget": "cortexa9",
+      "profile": "linksys_wrt1900ac-v2",
+      "config": "wrt1900acv2", "output": "Linksys-WRT1900AC-V2",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mvebu-cortexa9-linksys_wrt1900ac-v2-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mvebu-cortexa9-linksys_wrt1900ac-v2-squashfs-factory.img"
+    },
+
+    "WRT1900ACS": {
+      "details": "Linksys WRT1900ACS",
+      "target": "mvebu", "subtarget": "cortexa9",
+      "profile": "linksys_wrt1900acs",
+      "config": "wrt1900acs", "output": "Linksys-WRT1900ACS",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mvebu-cortexa9-linksys_wrt1900acs-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mvebu-cortexa9-linksys_wrt1900acs-squashfs-factory.img"
+    },
+
+    "WRT3200ACM": {
+      "details": "Linksys WRT3200ACM",
+      "target": "mvebu", "subtarget": "cortexa9",
+      "profile": "linksys_wrt3200acm",
+      "config": "wrt3200acm", "output": "Linksys-WRT3200ACM",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mvebu-cortexa9-linksys_wrt3200acm-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mvebu-cortexa9-linksys_wrt3200acm-squashfs-factory.img"
+    },
+
+    "WRT32X": {
+      "details": "Linksys WRT32X",
+      "target": "mvebu", "subtarget": "cortexa9",
+      "profile": "linksys_wrt32x",
+      "config": "wrt32x", "output": "Linksys-WRT32X",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mvebu-cortexa9-linksys_wrt32x-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-mvebu-cortexa9-linksys_wrt32x-squashfs-factory.img"
+    },
+
+    "TGR1900": {
+      "details": "TP-Link TGR1900 (OnHub)",
+      "target": "ipq806x", "subtarget": "chromium",
+      "profile": "tplink_onhub",
+      "config": "tgr1900", "output": "TP-Link-TGR1900",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-ipq806x-chromium-tplink_onhub-squashfs-sysupgrade.bin",
+      "image_factory":    "openwrt-ipq806x-chromium-tplink_onhub-squashfs-factory.bin"
+    },
+
+    "X86-64": {
+      "details": "Generic x86-64",
+      "target": "x86", "subtarget": "64",
+      "profile": "generic",
+      "config": "x86-64", "output": "x86-64",
+      "rooter_package": "ext-rooter16", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-x86-64-generic-ext4-combined.img.gz",
+      "image_factory":    "openwrt-x86-64-generic-ext4-combined-efi.img.gz",
+      "build_type": "x86"
+    },
+
+    "RASPPI": {
+      "details": "Raspberry Pi 1",
+      "target": "bcm27xx", "subtarget": "bcm2708",
+      "profile": "rpi",
+      "config": "rasppi", "output": "RaspberryPi-1",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2708-rpi-ext4-factory.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPI2": {
+      "details": "Raspberry Pi 2",
+      "target": "bcm27xx", "subtarget": "bcm2709",
+      "profile": "rpi-2",
+      "config": "rasppi2", "output": "RaspberryPi-2",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2709-rpi-2-ext4-factory.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPI3": {
+      "details": "Raspberry Pi 3 SD",
+      "target": "bcm27xx", "subtarget": "bcm2710",
+      "profile": "rpi-3",
+      "config": "rasppi3", "output": "RaspberryPi-3-SD",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2710-rpi-3-ext4-sysupgrade.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPI3USB": {
+      "details": "Raspberry Pi 3 USB",
+      "target": "bcm27xx", "subtarget": "bcm2710",
+      "profile": "rpi-3",
+      "config": "rasppi3", "output": "RaspberryPi-3-USB",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2710-rpi-3-ext4-sysupgrade.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPIZ2": {
+      "details": "Raspberry Pi Zero 2",
+      "target": "bcm27xx", "subtarget": "bcm2710",
+      "profile": "rpi-3",
+      "config": "rasppiz2", "output": "RaspberryPi-Zero-2",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2710-rpi-3-ext4-sysupgrade.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPI4": {
+      "details": "Raspberry Pi 4 SD",
+      "target": "bcm27xx", "subtarget": "bcm2711",
+      "profile": "rpi-4",
+      "config": "rasppi4", "output": "RaspberryPi-4-SD",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2711-rpi-4-ext4-factory.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPI4USB": {
+      "details": "Raspberry Pi 4 USB",
+      "target": "bcm27xx", "subtarget": "bcm2711",
+      "profile": "rpi-4",
+      "config": "rasppi4", "output": "RaspberryPi-4-USB",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2711-rpi-4-ext4-factory.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPICM4": {
+      "details": "Raspberry Pi CM4 SD",
+      "target": "bcm27xx", "subtarget": "bcm2711",
+      "profile": "rpi-4",
+      "config": "rasppicm4", "output": "RaspberryPi-CM4-SD",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2711-rpi-4-ext4-factory.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPICM4USB": {
+      "details": "Raspberry Pi CM4 USB",
+      "target": "bcm27xx", "subtarget": "bcm2711",
+      "profile": "rpi-4",
+      "config": "rasppicm4", "output": "RaspberryPi-CM4-USB",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2711-rpi-4-ext4-factory.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPI5": {
+      "details": "Raspberry Pi 5",
+      "target": "bcm27xx", "subtarget": "bcm2712",
+      "profile": "rpi-5",
+      "config": "rasppi5", "output": "RaspberryPi-5",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2712-rpi-5-ext4-factory.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "RASPPI5USB": {
+      "details": "Raspberry Pi 5 USB",
+      "target": "bcm27xx", "subtarget": "bcm2712",
+      "profile": "rpi-5",
+      "config": "rasppi5", "output": "RaspberryPi-5-USB",
+      "rooter_package": "ext-rooter-rasppi", "mwan3_package": "ext-rooter-rasppi",
+      "image_sysupgrade": "openwrt-bcm27xx-bcm2712-rpi-5-ext4-factory.img.gz",
+      "image_factory":    null,
+      "build_type": "sdcard"
+    },
+
+    "WS1698": {
+      "details": "Huasifei WS1698AX",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "huasifei_ws1698",
+      "config": "ws1698", "output": "Huasifei-WS1698AX",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-huasifei_ws1698-squashfs-sysupgrade.bin",
+      "image_factory":    null,
+      "_note": "DTS ported from 24.10; filogic.mk entry added by ROOter 25.12 migration"
+    },
+
+    "WS1698-256": {
+      "details": "Huasifei WS1698AX-256M",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "huasifei_ws1698-256M",
+      "config": "ws1698-256", "output": "Huasifei-WS1698AX-256M",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-huasifei_ws1698-256M-squashfs-sysupgrade.bin",
+      "image_factory":    null,
+      "_note": "DTS ported from 24.10; filogic.mk entry added by ROOter 25.12 migration"
+    },
+
+    "Z8105": {
+      "details": "ZBT Z8109AX-128M (alias Z8105)",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "zbt_z8109ax-128m",
+      "config": "z8109-128", "output": "ZBT-Z8109AX-128M",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-zbt_z8109ax-128m-squashfs-sysupgrade.bin",
+      "image_factory":    null,
+      "_note": "DTS ported from 24.10; filogic.mk entry added by ROOter 25.12 migration"
+    },
+
+    "Z8109-128": {
+      "details": "ZBT Z8109AX-128M",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "zbt_z8109ax-128m",
+      "config": "z8109-128", "output": "ZBT-Z8109AX-128M",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-zbt_z8109ax-128m-squashfs-sysupgrade.bin",
+      "image_factory":    null,
+      "_note": "DTS ported from 24.10; filogic.mk entry added by ROOter 25.12 migration"
+    },
+
+    "Z8109-512": {
+      "details": "ZBT Z8109AX-512M",
+      "target": "mediatek", "subtarget": "filogic",
+      "profile": "zbt_z8109ax-512m",
+      "config": "z8109-512", "output": "ZBT-Z8109AX-512M",
+      "rooter_package": "ext-rooter-lite", "mwan3_package": "ext-rooter16",
+      "image_sysupgrade": "openwrt-mediatek-filogic-zbt_z8109ax-512m-squashfs-sysupgrade.bin",
+      "image_factory":    null,
+      "_note": "DTS ported from 24.10; filogic.mk entry added by ROOter 25.12 migration"
+    }
+
+  }
+}
