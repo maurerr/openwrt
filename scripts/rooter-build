@@ -13,7 +13,7 @@
 
 set -eu
 
-ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+ROOT="$(CDPATH= cd -- "$(dirname "$(readlink -f "$0")")/.." && pwd)"
 MODEL_DB="${MODEL_DB:-$ROOT/scripts/rooter-models/router-all.json}"
 CONFIG_DIR="$ROOT/.rooter/configs"
 JOBS="${ROOTER_JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)}"
@@ -47,7 +47,7 @@ command -v python3 >/dev/null 2>&1 || die "python3 is required on the build host
 # JSON helpers
 #--------------------------------------------------------------------
 _json_model() {
-    python3 - "$MODEL_DB" "$1" "$2" <<'PY'
+    python3 - "$1" "$2" "$3" <<'PY'
 import json, sys
 db = json.load(open(sys.argv[1]))
 models = db.get("models", db)
