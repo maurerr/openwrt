@@ -50,7 +50,8 @@ config_load wireless
 config_foreach do_radio wifi-device $RAD
 GUEST="guest""$RADIO"
 
-LANIP=$(uci -q get network.lan.ipaddr)
+LANIP=$(uci -q get network.lan.ipaddr | cut -d/ -f1 | awk '{print $1}')
+[ -z "$LANIP" ] && LANIP="192.168.1.1"
 L1=$(echo $LANIP | cut -d. -f1)
 L2=$(echo $LANIP | cut -d. -f2)
 L3=$(echo $LANIP | cut -d. -f3)

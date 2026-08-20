@@ -164,7 +164,7 @@ loadmesh() {
 	log "roam enable = $signalenable"
 	log "id = $signalid"
 	
-	ipaddr=$(uci -q get network.lan.ipaddr)
+	ipaddr=$(uci -q get network.lan.ipaddr | cut -d/ -f1 | awk '{print $1}')
 	
 	uci set wireless.default_radio$radionum.disabled=$dedicated
 	uci set wireless.radio$radionum.htmode=$cwidth

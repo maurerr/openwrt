@@ -463,7 +463,7 @@ if [ "$ACTION" = add ]; then
 	if [ $retval -ne 0 ]; then
 		log "Found Modem $CURRMODEM"
 		if [ $reinsert = 0 ]; then
-			if -e "/tmp/gotpcie1" ]; then
+			if [ -e "/tmp/gotpcie1" ]; then
 				gpc=$(cat /tmp/gotpcie1)
 				if [ "$gpc" = $CURRMODEM ]; then
 					exit 0
