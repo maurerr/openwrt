@@ -13,6 +13,14 @@ start_service()
 	if [ ! -d /tmp/www ]; then
 		mkdir -p /tmp/www
 	fi
-	/usr/lib/iframe/create.sh &
-	/usr/lib/iframe/status.sh &
+
+	procd_open_instance create
+	procd_set_param command /usr/lib/iframe/create.sh
+	procd_set_param respawn
+	procd_close_instance
+
+	procd_open_instance status
+	procd_set_param command /usr/lib/iframe/status.sh
+	procd_set_param respawn
+	procd_close_instance
 }

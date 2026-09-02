@@ -1,0 +1,45 @@
+#!/bin/sh
+# Source path: files/etc/uci-defaults/99-custom-init
+
+# Set file permissions for system scripts
+chmod +x /usr/lib/rooter/connect/lock.sh
+chmod +x /usr/lib/rooter/connect/reconnect.sh
+chmod +x /etc/hotplug.d/net/99-modem-dhcp
+
+# Commit standard ROOter default IP and DHCP settings
+uci set network.lan.ipaddr='192.168.1.1'
+uci set dhcp.lan.ignore='0'
+
+# Configure 2.4GHz Wi-Fi (Radio 0)
+if uci get wireless.@wifi-device[0] >/dev/null 2>&1; then
+    uci set wireless.@wifi-device[0].disabled='0'
+    uci set wireless.@wifi-device[0].channel='auto'
+    uci set wireless.@wifi-device[0].htmode='HT20'
+    
+    uci set wireless.@wifi-iface[0].disabled='0'
+    uci set wireless.@wifi-iface[0].ssid='ROOter'
+    uci set wireless.@wifi-iface[0].encryption='psk2'
+    uci set wireless.@wifi-iface[0].key='rooter2017'
+    uci set wireless.@wifi-iface[0].mode='ap'
+    uci set wireless.@wifi-iface[0].network='lan'
+fi
+
+# Configure 5GHz Wi-Fi (Radio 1)
+if uci get wireless.@wifi-device[1] >/dev/null 2>&1; then
+    uci set wireless.@wifi-device[1].disabled='0'
+    uci set wireless.@wifi-device[1].channel='auto'
+    uci set wireless.@wifi-device[1].htmode='VHT80'
+    
+    uci set wireless.@wifi-iface[1].disabled='0'
+    uci set wireless.@wifi-iface[1].ssid='ROOter-5G'
+    uci set wireless.@wifi-iface[1].encryption='psk2'
+    uci set wireless.@wifi-iface[1].key='rooter2017'
+    uci set wireless.@wifi-iface[1].mode='ap'
+    uci set wireless.@wifi-iface[1].network='lan'
+fi
+
+uci commit network
+uci commit dhcp
+uci commit wireless
+
+exit 0

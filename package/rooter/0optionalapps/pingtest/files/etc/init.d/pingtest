@@ -10,5 +10,8 @@ log() {
 
 start_service()
 {
-	/usr/lib/custom/test_ping.sh &
+	procd_open_instance
+	procd_set_param command /usr/lib/custom/test_ping.sh
+	procd_set_param respawn
+	procd_close_instance
 }
